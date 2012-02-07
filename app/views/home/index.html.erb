@@ -1,24 +1,21 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>TagLab</title>
-		<%= stylesheet_link_tag :all %>
-	  	<%= javascript_include_tag :defaults %>
-	  	<%= csrf_meta_tag %>
-	  	<link href="/stylesheets/stylesheet.css" rel="stylesheet" type="text/css">
-	  	<script src="/javascripts/jquery-1.7.1.js"></script>
-	</head>
-	<body>
-	
-	<!-- Load content into <body> of application.html.erb file -->
-	<p>Welcome to TagLab</p>
+  <head>
+    <title>TagLab</title>
+    <link href="/stylesheets/stylesheet.css" rel="stylesheet" type="text/css">
+	<script src="/javascripts/jquery-1.7.1.js"></script>
+  </head>
+  <body>
+  	<p>Welcome to TagLab</p>
 	<img src="/images/logo.jpg" alt="TagLab now!" />
 	<p><em>meep meep</em></p>
 	<%= link_to 'Profile', users_path %>
 	<%= link_to 'Tags', tags_path %>
 	
+	<%= link_to "Sign in with Twitter", "/auth/twitter/" %>
+	
 		
-	</body>
+  </body>
 </html>
 
 
