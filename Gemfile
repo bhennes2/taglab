@@ -43,4 +43,4 @@ gem 'sinatra', '1.0'
 # end
 
 #Omniauth for login with Twitter & Facebook
-gem 'omniauth'
+#gem 'omniauth'
