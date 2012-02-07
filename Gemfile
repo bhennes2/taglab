@@ -41,3 +41,6 @@ gem 'sinatra', '1.0'
 # group :development, :test do
 #   gem 'webrat'
 # end
+
+#Omniauth for login with Twitter & Facebook
+gem 'omniauth'
