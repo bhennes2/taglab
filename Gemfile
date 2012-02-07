@@ -41,5 +41,3 @@ gem 'sinatra', '1.0'
 # group :development, :test do
 #   gem 'webrat'
 # end
-
-gem 'omniauth'
