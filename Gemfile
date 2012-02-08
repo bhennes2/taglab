@@ -41,3 +41,7 @@ gem 'sinatra', '1.0'
 # group :development, :test do
 #   gem 'webrat'
 # end
+
+# Add authentication for Twitter and Facebook login
+gem 'omniauth-twitter'
+gem 'omniauth-facebook'
