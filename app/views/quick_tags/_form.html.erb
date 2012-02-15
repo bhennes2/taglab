@@ -1,0 +1,29 @@
+<%= form_for(@quick_tag) do |f| %>
+  <% if @quick_tag.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@quick_tag.errors.count, "error") %> prohibited this quick_tag from being saved:</h2>
+
+      <ul>
+      <% @quick_tag.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :category %><br />
+    <%= f.text_field :category %>
+  </div>
+  <div class="field">
+    <%= f.label :location %><br />
+    <%= f.text_field :location %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

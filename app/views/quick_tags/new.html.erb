@@ -1,0 +1,58 @@
+<div id="wrapper">
+	<div id="header">
+		<h1>Add Quick Tag</h1>
+        <a href="<%= root_url %>" class="back"><img src="/images/back.png" alt="Back" /></a>
+    </div><!--close header-->
+    <div id="content">
+    	<div id="interior">
+			<%= form_for(@quick_tag) do |f| %>
+  				<% if @quick_tag.errors.any? %>
+  					<div id="error_explanation">
+      					<h2>
+							<%= pluralize(@quick_tag.errors.count, "error") %> prohibited this quick_tag from being saved:
+						</h2>
+					    <ul>
+      						<% @quick_tag.errors.full_messages.each do |msg| %>
+        						<li>
+									<%= msg %>
+								</li>
+      						<% end %>
+				      	</ul>
+    				</div>
+  				<% end %>
+				
+				<fieldset>
+					<ul class="pageitem">
+						<li class="bigfield">
+							<%= f.text_field :title, :placeholder => "Title" %>
+						</li>
+					</ul>
+					<ul class="pageitem">
+						<li class="bigfield">
+							<%= f.text_field :category, :placeholder => "Category" %>
+						</li>
+					</ul>
+					<ul class="pageitem">
+			            <li class="checkbox"><span class="name">Location</span>
+							<!--<input name="location" type="checkbox" />-->
+							<%= f.check_box :location %>
+						</li>
+					</ul>
+					<ul class="pageitem">
+						<li class="button">
+							<%= f.submit :value => "SUBMIT", :class => "orange" %>
+						</li>
+					</ul>
+					<div id="user_id">
+						<%= f.text_field :user_id, :value => current_user.id %>
+					</div>
+				</fieldset>
+			<% end %>
+        </div><!--close interior-->
+    </div><!--close content-->
+    <div id="footer">
+    	<p>&copy; copyright 2012 Tag Lab</p>
+    </div><!--close footer-->
+</div><!--close wrapper--> 
+
+<!--<%= link_to 'Back', quick_tags_path %>-->

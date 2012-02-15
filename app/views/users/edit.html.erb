@@ -1,6 +1,107 @@
-<h1>Editing user</h1>
+<div id="wrapper">
+	<div id="header">
+        <h1>Profile</h1>
+        <a href="<%= root_url %>" class="back"><img src="/images/back.png" alt="Back" /></a>
+    </div><!--close header-->
+    <div id="content">
+		<%= form_for(@user) do |f| %>
+  			<% if @user.errors.any? %>
+    			<div id="error_explanation">
+      				<h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:
+				</h2>
+			    <ul>
+      				<% @user.errors.full_messages.each do |msg| %>
+      		  			<li>
+							<%= msg %>
+						</li>
+      				<% end %>
+      			</ul>
+    			</div>
+  			<% end %>
+    		<div id="interior">
+				<fieldset>
+					<ul class="pageitem">
+						<li class="bigfield">
+							<!--<input placeholder="Username" type="text" />-->
+						    <%= f.text_field :username, :placeholder => "Username" %>
+						</li>
+					</ul>        
+					<ul class="pageitem">
+						<li class="bigfield">
+							<!--<input placeholder="Name" type="text" />-->
+							<%= f.text_field :first_name, :placeholder => "Name" %>
+						</li>
+					</ul>
+					<ul class="pageitem">
+        			    <li class="textbox">
+							<!--<textarea placeholder="Bio" name="TextArea" rows="4"></textarea>-->
+							<%= f.text_area :about, :placeholder => "Bio", :rows => 4 %>
+						</li>
+					</ul>        
+					<ul class="pageitem">
+						<li class="bigfield">
+							<!--<input placeholder="Email Address" type="text" />-->
+							<%= f.text_field :email , :placeholder => "Email Address" %>
+						</li>
+					</ul>
+					<ul class="pageitem">
 
-<%= render 'form' %>
+						<li class="select">
+							<!--<select name="sex">
+            					<option value="0">Sex</option>
+								<option value="1">Female</option>
+								<option value="2">Male</option>
+							</select>-->
+							<span class="arrow"></span> 
+							<%= f.select :sex, ["","Male","Female"] %>
+						</li>
+					</ul>        
+        			<ul class="pageitem">
+        				<li class="checkbox" style="position:relative">
+							<span class="name" style="position:absolute;">Birthday</span>
+								<!--<input type="date"></input>-->
+								
+						</li>
+					</ul>
+					<%= f.date_select :age, :start_year => (Time.now.year - 100), :use_short_month => true, :order => [:month, :day, :year] %>
+					<ul class="pageitem">
+						<li class="bigfield">
+							<!--<input placeholder="Zip Code" type="text" maxlength="5" />-->
+							<%= f.text_field :zip_code, :placeholder => "Zip Code" %>
+						</li>
+					</ul>            
+					<ul class="pageitem">
+						<li class="select">
+							<!--<select name="timezone">
+								<option value="0">Time Zone</option>
+								<option value="1">Pacific</option>
+	   							<option value="2">Mountain</option>
+								<option value="3">Central</option>
+								<option value="4">Eastern</option>
+							</select>--><span class="arrow"></span> 
+							<%= f.time_zone_select :time_zone %>
+						</li>
+					</ul>   
+					<div id="user_id">
+    					<%= f.text_field :uid %>
+  					</div>					
+					<ul class="pageitem">      
+						<li class="button">
+							<!--<input name="Submit" type="submit" value="SUBMIT" class="orange" />-->
+							<%= f.submit :value => "SUBMIT", :class => "orange" %>
+						</li>
+					</ul>
+			</fieldset>
+		<% end %>
+		
+		<%= #Calculation to determine age
+			((Time.now.utc - (current_user.age).to_time.utc)/(31556926)).floor %>
+        <%= link_to "Sign Out", signout_path %>
+		
+        </div><!--close interior-->
+    </div><!--close content-->
+    <div id="footer">
+    	<p>&copy; copyright 2012 Tag Lab</p>
+    </div><!--close footer-->
+</div><!--close wrapper--> 
 
-<%= link_to 'Show', @user %> |
-<%= link_to 'Back', users_path %>

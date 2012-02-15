@@ -1,7 +1,10 @@
 class Tag < ActiveRecord::Base
 	
-	if true
-		validates :title, :presence => true 
-	end
+	belongs_to :user
+	
+	#self.primary_key = "user_id"
+	
+	validates :title, :presence => true 
+	
 
 end

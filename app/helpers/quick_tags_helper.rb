@@ -1,0 +1,2 @@
+module QuickTagsHelper
+end

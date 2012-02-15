@@ -1,31 +1,72 @@
-<h1>Listing tags</h1>
+<div id="wrapper">
+	<div id="header">
+		<h1>View Tags</h1>
+        <a href="<%= root_url %>" class="back"><img src="/images/back.png" alt="Back" /></a>
+    </div><!--close header-->
+    <div id="content">
+    	<div id="interior">
+			<!--<span class="date">Sunday, February 4, 2012</span> -->
+        	    <ul class="pageitem">
+					<script>
+					var display_tags = [
+						<% current_user.tags.each do |tag| %>
+							{
+								"id": <%= tag.id %>,
+								"time": "<%= tag.time.to_i %>",
+								"title": "<%= tag.title %>",
+								"location": "<%= tag.location %>"		
+							}
+							<% if tag != current_user.tags.last %>,<%end%>
+						<% end %>
+					];
+					
+					var sort_by = function(field, reverse, primer){
+	 					var key = function (x) {return primer ? primer(x[field]) : x[field]};
 
-<table>
-  <tr>
-    <th>Time</th>
-    <th>Title</th>
-    <th>Notes</th>
-    <th>Location</th>
-    <th>User</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+	   					return function (a,b) {
+	       					var A = key(a), B = key(b);
+						    return ((A < B) ? -1 :
+	               			(A > B) ? +1 : 0)) * [-1,1][+!!reverse];                  
+						}
+					}
+					
+					//display_tags.sort(sort_by('time', true, parseInt));
+				
+					</script>					
+					
+					<% current_user.tags.each do |tag| %>
+						<li class="single-tag">
+							<a href="<%= edit_tag_path(tag) %>">
+								<span class="title"><%= tag.title %></span>
+								<span class="time">
+									<%= Time.at(tag.time.to_i).in_time_zone(current_user.time_zone).strftime("%l:%M%P") %>
+									<% if tag.location != "0" %>
+										<span>Location</span>
+									<% end %>									
+									<!-- Indicate whether or not an image is with the tag-->
+								</span>
+							</a>
+						</li>
+					<% end %>					
+					<% if current_user.tags == [] %>
+						<li class="single-tag">
+							<a href="<%= new_tag_path %>">
+								<span class="title">No tags loaded yet...click here to create tag</span>
+							</a>
+						</li>
+					<% end %>
+				</ul>
+		</div><!--close interior-->
+    </div><!--close content-->
+    <div id="footer">
+    	<p>&copy; copyright 2012 Tag Lab</p>
+    </div><!--close footer-->
+</div><!--close wrapper-->    
+				
+		
+		
+		
+		
 
-<% @tags.each do |tag| %>
-  <tr>
-    <td><%= tag.time %></td>
-    <td><%= tag.title %></td>
-    <td><%= tag.notes %></td>
-    <td><%= tag.location %></td>
-    <td><%= tag.user_id %></td>
-    <td><%= link_to 'Show', tag %></td>
-    <td><%= link_to 'Edit', edit_tag_path(tag) %></td>
-    <td><%= link_to 'Destroy', tag, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
+	
 
-<br />
-
-<%= link_to 'New Tag', new_tag_path %>

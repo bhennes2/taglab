@@ -1,6 +1,304 @@
-<h1>Editing tag</h1>
+<div id="wrapper">
+	<div id="header">
+		<h1>Edit Tag</h1>
+        <a href="<%= root_url %>" class="back"><img src="/images/back.png" alt="Back" /></a>
+    </div><!--close header-->
+    <div id="content">
+    	<div id="interior">
+        	<%= form_for(@tag, :html => {:name=>"edit_tag"} ) do |f| %>
+  				<% if @tag.errors.any? %>
+  					<div id="error_explanation">
+      					<h2><%= pluralize(@tag.errors.count, "error") %> prohibited this tag from being saved:</h2>
+					    <ul>
+      						<% @tag.errors.full_messages.each do |msg| %>
+      							<li><%= msg %></li>
+      						<% end %>
+      					</ul>
+    				</div>
+				<% end %>
+				<fieldset>
+					<ul class="pageitem">
+						<li class="bigfield">
+							<!--<input placeholder="Title" type="text" value="<%= @tag.title %>" />-->
+							<%= f.text_field :title, :placeholder =>"Title" %>
+						</li>
+					</ul>
+					<ul class="pageitem">
+            			<li class="checkbox" style="position:relative">
+							<span class="name" style="position:absolute;">Date</span>
+								<input type="date" id="date" value="<%= Time.at(@tag.time.to_i).in_time_zone(current_user.time_zone).to_date %>"></input>
+						</li>
+            			<li class="checkbox" style="position:relative">
+							<span class="name" style="position:absolute;">Time</span>
+								<input type="time" value="<%= Time.at(@tag.time.to_i).in_time_zone(current_user.time_zone).to_time %>"></input>
+						</li>
+						
+		   			</ul>
+					<ul class="pageitem">
+            			<li class="textbox">
+							<!--<textarea placeholder="Notes" name="TextArea" rows="4"><%= @tag.notes %></textarea>-->
+							<%= f.text_area :notes, :placeholder => "Notes", :rows => "4" %>
+						</li>
+					</ul>
+					<ul class="pageitem">
+            			<li class="checkbox"><span class="name">Location</span>
+							<% if @tag.location != "0" %>
+								<!--<input name="location" id="location" type="checkbox" value="<%= @tag.location %>" checked onclick = "load_location();" />-->
+								<%= f.check_box :location, { :checked => true } %>
+						</li>
+							<% else %>						
+								<!--<input name="location" id="location" type="checkbox" onclick = "load_location();"/></li>-->
+								<%= f.check_box :location, { :value => "hello" }  %>
+							<% end %>
+						</li>
+					</ul>
+					<% if @tag.location != "0" %>
+						<ul class="pageitem" style="padding: 8px 0 4px 8px;" onLoad = "initialize();">
+        					<!-- Insert map w/ Google API -->
+							<!--<iframe width="264" height="264" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=b+rose+salon&amp;aq=&amp;sll=41.936402,-87.663056&amp;sspn=0.015036,0.032101&amp;ie=UTF8&amp;hq=b+rose+salon&amp;hnear=&amp;t=m&amp;cid=10910527162893858754&amp;ll=41.943404,-87.664461&amp;spn=0.016726,0.0424&amp;z=14&amp;iwloc=&amp;output=embed"></iframe> -->
+							<div id="map_canvas" style=" height: 264px; width: 264px;">
+								
+							</div>
+			        	</ul>
+					<% end %>
+						
+					<div id="user_id">
+    				    <%= f.text_field :user_id %>
+  					</div>
+					<ul class="pageitem">
+						<li class="button">
+							<!--<input name="Submit" type="submit" value="SUBMIT" class="orange" />-->
+							<%= f.submit :class => "orange", :value => "SUBMIT" %>
 
-<%= render 'form' %>
+						</li>
+					</ul>
+	
+					<% date_of_tag = Time.at(@tag.time.to_i).in_time_zone(current_user.time_zone).to_date %>
+					<% select_date date_of_tag, :order => [:month, :day, :year] %>
+					
+					<select id="date_month">
+  						<option value="1">Jan</option>
+						<option value="2">Feb</option>
+						<option value="3">Mar</option>
+						<option value="4">Apr</option>
+						<option value="5">May</option>
+						<option value="6">Jun</option>
+						<option value="7">Jul</option>
+						<option value="8">Aug</option>
+						<option value="9">Sep</option>
+						<option value="10">Oct</option>
+						<option value="11">Nov</option>
+						<option value="12">Dec</option>
+					</select>
+					<select id="date_day">
+  						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+						<option value="9">9</option>
+						<option value="10">10</option>
+						<option value="11">11</option>
+						<option value="12">12</option>
+						<option value="13">13</option>
+						<option value="14">14</option>
+						<option value="15">15</option>
+						<option value="16">16</option>
+						<option value="17">17</option>
+						<option value="18">18</option>
+						<option value="19">19</option>
+						<option value="20">20</option>
+						<option value="21">21</option>
+						<option value="22">22</option>
+						<option value="23">23</option>
+						<option value="24">24</option>
+						<option value="25">25</option>
+						<option value="26">26</option>
+						<option value="27">27</option>
+						<option value="28">28</option>
+						<option value="29">29</option>
+						<option value="30">30</option>
+						<option value="31">31</option>						
+					</select>
+					<% date_year = Time.at(@tag.time.to_i).in_time_zone(current_user.time_zone).year %>
+					<select id="date_year">
+  						<option value="<%= date_year - 1 %>"><%= date_year - 1 %></option>
+						<option value="<%= date_year %>"><%= date_year %></option>
+						<option value="<%= date_year + 1 %>"><%= date_year + 1 %></option>
+					</select>
+					<select id="date_hour">
+						<option value="00">00</option>
+						<option value="01">01</option>
+						<option value="02">02</option>
+						<option value="03">03</option>
+						<option value="04">04</option>
+						<option value="05">05</option>
+						<option value="06">06</option>
+						<option value="07">07</option>
+						<option value="08">08</option>
+						<option value="09">09</option>
+						<option value="10">10</option>
+						<option value="11">11</option>
+						<option value="12">12</option>
+						<option value="13">13</option>
+						<option value="14">14</option>
+						<option value="15">15</option>
+						<option value="16">16</option>
+						<option value="17">17</option>
+						<option value="18">18</option>
+						<option value="19">19</option>
+						<option value="20">20</option>
+						<option value="21">21</option>
+						<option value="22">22</option>
+						<option value="23">23</option>					
+					</select>
+					<select id="date_minute">
+						<option value="00">00</option>
+						<option value="01">01</option>
+						<option value="02">02</option>
+						<option value="03">03</option>
+						<option value="04">04</option>
+						<option value="05">05</option>
+						<option value="06">06</option>
+						<option value="07">07</option>
+						<option value="08">08</option>
+						<option value="09">09</option>
+						<option value="10">10</option>
+						<option value="11">11</option>
+						<option value="12">12</option>
+						<option value="13">13</option>
+						<option value="14">14</option>
+						<option value="15">15</option>
+						<option value="16">16</option>
+						<option value="17">17</option>
+						<option value="18">18</option>
+						<option value="19">19</option>
+						<option value="20">20</option>
+						<option value="21">21</option>
+						<option value="22">22</option>
+						<option value="23">23</option>
+						<option value="24">24</option>
+						<option value="25">25</option>
+						<option value="26">26</option>
+						<option value="27">27</option>
+						<option value="28">28</option>
+						<option value="29">29</option>
+						<option value="30">30</option>
+						<option value="31">31</option>
+						<option value="32">32</option>
+						<option value="33">33</option>
+						<option value="34">34</option>
+						<option value="35">35</option>
+						<option value="36">36</option>
+						<option value="37">37</option>
+						<option value="38">38</option>
+						<option value="39">39</option>
+						<option value="40">40</option>
+						<option value="41">41</option>
+						<option value="42">42</option>
+						<option value="43">43</option>
+						<option value="44">44</option>
+						<option value="45">45</option>
+						<option value="46">46</option>
+						<option value="47">47</option>
+						<option value="48">48</option>
+						<option value="49">49</option>
+						<option value="50">50</option>
+						<option value="51">51</option>
+						<option value="52">52</option>
+						<option value="53">53</option>
+						<option value="54">54</option>
+						<option value="55">55</option>
+						<option value="56">56</option>
+						<option value="57">57</option>
+						<option value="58">58</option>
+						<option value="59">59</option>
+					</select>
+					
+					
+					
+					
+					
 
-<%= link_to 'Show', @tag %> |
-<%= link_to 'Back', tags_path %>
+					<% time_of_tag = Time.at(@tag.time.to_i).in_time_zone(current_user.time_zone).to_time %>
+					<% select_time time_of_tag, :ampm => true %>
+												
+					<div id="user_id">
+						<%= f.text_field :time %>
+					</div>
+					
+					
+					
+					</fieldset>
+					
+
+			<% end %>
+			<%= link_to 'Destroy', @tag, :confirm => 'Are you sure?', :method => :delete %>
+			
+			
+        </div><!--close interior-->
+    </div><!--close content-->
+    <div id="footer">
+    	<p>&copy; copyright 2012 Tag Lab</p>
+    </div><!--close footer-->
+</div><!--close wrapper-->  
+<script>
+
+		$(document).ready(function() {
+			document.getElementById("date_year").value = <%= Time.at(@tag.time.to_i).in_time_zone(current_user.time_zone).year %>;
+			document.getElementById("date_month").value = <%= Time.at(@tag.time.to_i).in_time_zone(current_user.time_zone).mon %>;
+			document.getElementById("date_day").value = <%= Time.at(@tag.time.to_i).in_time_zone(current_user.time_zone).day %>;
+			document.getElementById("date_hour").value = <%= Time.at(@tag.time.to_i).in_time_zone(current_user.time_zone).hour %>;
+			document.getElementById("date_minute").value = <%= Time.at(@tag.time.to_i).in_time_zone(current_user.time_zone).min %>;
+		})
+
+
+
+		$("select").change(function () {
+		  
+		  	var date_time = Date.UTC(document.getElementById("date_year").options[document.getElementById("date_year").selectedIndex].value,
+									 (document.getElementById("date_month").options[document.getElementById("date_month").selectedIndex].value-1),
+									 document.getElementById("date_day").options[document.getElementById("date_day").selectedIndex].value,
+									 document.getElementById("date_hour").options[document.getElementById("date_hour").selectedIndex].value,
+									 document.getElementById("date_minute").options[document.getElementById("date_minute").selectedIndex].value);
+			$("#tag_time").val(date_time/1000+21600);
+		})
+		
+		// Code for Google Map 
+		function initialize(){
+			<% if @tag.location != "0" %>
+			var map = new google.maps.Map(document.getElementById("map_canvas"), {
+    	    	zoom: 15,
+				
+				
+					<% @latitude = @tag.location.split(",")[0]
+					@longitude = @tag.location.split(",")[1] %>
+					center: new google.maps.LatLng(<%= @latitude %>,<%= @longitude %>),
+				
+	        	mapTypeId: google.maps.MapTypeId.ROADMAP
+			});
+			var marker = new google.maps.Marker({
+        		map: map,
+				<% if @tag.location != "0"
+					@latitude = @tag.location.split(",")[0]
+					@longitude = @tag.location.split(",")[1] %>
+					position: new google.maps.LatLng(<%= @latitude %>,<%= @longitude %>),
+				<% end %>
+          		draggable: false
+        	});
+			<% end %>
+		}
+		
+		function showMap(position) {
+      		// Show a map centered at (position.coords.latitude, position.coords.longitude).
+			document.edit_tag.tag_location.value = position.coords.latitude+","+position.coords.longitude;
+			
+	    }
+		// One-shot position request.
+    	navigator.geolocation.getCurrentPosition(showMap);
+		
+	
+</script>

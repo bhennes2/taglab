@@ -29,19 +29,32 @@
   </div>
   <div class="field">
     <%= f.label :about %><br />
-    <%= f.text_field :about %>
+    <%= f.text_area :about, :rows => 5 %>
   </div>
+  
+  <%	age_range = ["-"]
+  		age_range = age_range.concat((13..99).to_a)
+  %>
+  
   <div class="field">
     <%= f.label :age %><br />
-    <%= f.text_field :age %>
+    <%= f.select :age, age_range %>
   </div>
   <div class="field">
     <%= f.label :sex %><br />
-    <%= f.text_field :sex %>
+    <%= f.select :sex, ["","M","F"] %>
   </div>
   <div class="field">
     <%= f.label :zip_code %><br />
     <%= f.text_field :zip_code %>
+  </div>
+  <div class="field">
+    <%= f.label :time_zone %><br />
+    <%= f.time_zone_select :time_zone %>
+  </div>
+  <div class="field">
+    <%= f.label :uid %><br />
+    <%= f.text_field :uid %>
   </div>
   <div class="actions">
     <%= f.submit %>

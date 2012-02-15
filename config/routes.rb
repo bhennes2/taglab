@@ -1,8 +1,10 @@
 Quicktag::Application.routes.draw do
+  resources :quick_tags
+
   resources :tags
 
   resources :users
-
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -53,14 +55,26 @@ Quicktag::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   root :to => "home#index"
-  match '/users' => 'home#users', :as => :users
-  match '/tags' => 'home#tags', :as => :tags	
+  #match '/users' => 'home#users', :as => :users
+  #match '/tags' => 'home#tags', :as => :tags	
   
   # Redirect for Provider (Twitter, Facebook, etc.) Oauth
   match "/auth/:provider/callback" => "sessions#create"
   
   # Provide sign out for Oauth
   match "/signout" => "sessions#destroy", :as => :signout
+  
+  # Provide route for submitting new tag via quick tag
+  match "/new_quicktag" => "tags#quicktag"
+  
+  # Provide route for viewing help page
+  match "/help" => "help#index"
+  
+  # Provide route for help page
+  #match "/help" => "help#show"
+  
+  # Provide path for help.html
+  #match '/help' => 'home#popular', :as => :help
   
   # Resource for autocomplete
   resources :tags do

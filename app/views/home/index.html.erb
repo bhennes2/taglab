@@ -1,21 +1,41 @@
 <!-- Load content into body of application.html.erb -->
-  	<p>Welcome to TagLab
 	<% if current_user %>
-		Welcome, <%= current_user.username %>!
-		<%= link_to "Sign Out", signout_path %>
-		<%= link_to 'Profile', users_path %>
-		<%= link_to 'Tags', tags_path %>
-		
+		<div id="wrapper">
+			<div id="header">
+		    	<img src="/images/taglab-logo.png" alt="TagLab" class="logo" />
+    		</div><!--close header-->
+	    <div id="content">
+	    	<ul id="nav">
+	        	<li class="quick-tags"><a href="<%= quick_tags_path %>">Quick Tags</a></li>
+	        	<li class="add-tag"><a href="<%= new_tag_path %>">Add Tag</a></li>
+	        	<li class="view-tags"><a href="<%= tags_path %>">View Tags</a></li>
+	        	<li class="experiments"><a href="#">Experiments</a></li>
+	        	<li class="profile"><a href="<%= edit_user_path(current_user) %>">Profile</a></li>
+	        	<li class="help last"><a href="<%= '/help' %>">Help</a></li>
+	        </ul>
+	    </div><!--close content-->
+	    <div id="footer">
+	    	<p>&copy; copyright 2012 Tag Lab</p>
+	    </div><!--close footer-->
+		</div><!--close wrapper-->
+		<!--Welcome, <%= current_user.username %>!
+		<%= link_to "Sign Out", signout_path %>-->
+
 	<% else %>
-		<%= link_to "Sign in with Twitter", "/auth/twitter/" %>
-		<!--<%= link_to "Sign in with Facebook", "/auth/facebook/" %>-->
-		
-	<% end %></p>
-	<img src="/images/logo.jpg" alt="TagLab now!" />
-	<p><em>meep meep</em></p>
+		<div id="wrapper">
+	      	<img src="/images/taglab-logo.png" alt="TagLab" style="width: 90%; margin: 0 auto; display: block; padding-top: 40px;" />
+	    	<a href="/auth/twitter/"><img src="/images/twitter.png" alt="Sign in with Twitter" style="width: 80%; margin: 0 auto; display:block; margin-top: 80px;" /></a>
+	       	<a href=""/auth/facebook/"><img src="/images/facebook.png" alt="Sign in with Facebook" style="width: 80%; margin: 0 auto; display:block; margin-top: 40px;" /></a>
+	       	<p style="text-align: center; font-size: 10pt; color: #ff6600; padding-top: 100px;">&copy; copyright 2012 Tag Lab</p>
+		</div><!--close wrapper-->
+	<% end %>
+
+
 	
 
 	
 	
 
 
+
+   

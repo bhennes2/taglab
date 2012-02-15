@@ -1,69 +1,85 @@
-<h1>New tag</h1>
-
+<div id="wrapper">
+	<div id="header">
+        <h1>Add Tag</h1>
+        <a href="<%= root_url %>" class="back"><img src="/images/back.png" alt="Back" /></a>
+    </div><!--close header-->
+    <div id="content">
+    	<div id="interior">
+			<%= form_for(@tag, :html => {:name=>"edit_tag"} ) do |f| %>
+				<% if @tag.errors.any? %>
+    				<div id="error_explanation">
+      					<h2><%= pluralize(@tag.errors.count, "error") %> prohibited this tag from being saved:</h2>
+					    <ul>
+      						<% @tag.errors.full_messages.each do |msg| %>
+        						<li><%= msg %></li>
+      						<% end %>
+				        </ul>
+    				</div>
+  				<% end %>
+				<fieldset>
+					<ul class="pageitem">
+						<li class="bigfield">
+							<%= f.text_field :title, :autocomplete=> :off, :placeholder => "Title" %>
+						</li>
+					</ul>
+					<ul class="pageitem">
+			            <li class="textbox">
+							<%= f.text_area :notes, :placeholder => "Notes", :rows => "4" %>
+						</li>
+					</ul>
+					<ul class="pageitem">
+			            <li class="checkbox"><span class="name">Location</span>
+							<!--<input name="location" type="checkbox" />-->
+							<%= f.check_box :location %>
+						</li>
+					</ul>
+					<ul class="pageitem">
+						<li class="button">
+							<%= f.submit :class => "orange", :value => "SUBMIT" %>
+						</li>
+					</ul>
+					<div id="user_id">
+    					<%= f.text_field :user_id, :value=> current_user.id %>
+  					</div>
+					<div id="time">
+    					
+						<% time = Time.now.utc.to_i
+			     			location = "holder"
+						%>
+					    <%= f.text_field :time, :value=> time %>
+  					</div>
+				</fieldset>
+		        
+			<% end %>
+        </div><!--close interior-->
+    </div><!--close content-->
+    <div id="footer">
+    	<p>&copy; copyright 2012 Tag Lab</p>
+    </div><!--close footer-->
+</div><!--close wrapper-->
+<!--
 <a onclick="update_fields('Breakfast')">Breakfast</a>
 <a onclick="update_fields('Lunch')">Lunch</a>
 <a onclick="update_fields('Dinner')">Dinner</a>
 <a onclick="update_fields('Bedtime')">Bedtime</a>
 <a onclick="update_fields('Wake Up')">Wake Up</a>
-
-<%= form_for(@tag) do |f| %>
-  <% if @tag.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@tag.errors.count, "error") %> prohibited this tag from being saved:</h2>
-
-      <ul>
-      <% @tag.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-  
-  <% time = Time.now.asctime 
-     location = "holder"
-	%>
-
-  <div class="field">
-    <%= f.label :time %>
-    <%= f.text_field :time, :value=> time %><br />
-  </div>
-  <div class="field">
-    <%= f.label :title %>
-    <%= f.text_field :title, :autocomplete=> :off %><br />
-  </div>
-  <div class="field">
-    <%= f.label :notes %>
-    <%= f.text_field :notes %><br />
-  </div>
-  <div class="field">
-    <%= f.label :location %>
-    <%= f.text_field :location %><br />
-  </div>
-  <div class="field">
-    <%= f.label :user_id %>
-    <%= f.text_field :user_id, :value=> current_user.uid %><br />
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
-
-<%= link_to 'Back', tags_path %>
+-->
 
 <script>  
+	
+	function initialize(){
+		return true;
+	}
 	
 	function update_fields(quick_tag) {
 		document.forms["new_tag"]["tag_title"].value = quick_tag;
 		document.forms["new_tag"].submit();
 	}
-
-
 	
 	function showMap(position) {
-      // Show a map centered at (position.coords.latitude, position.coords.longitude).
-	  document.forms["new_tag"]["tag_location"].value = "("+position.coords.latitude+", "+position.coords.longitude+")";
-	  
-    }
+      		// Show a map centered at (position.coords.latitude, position.coords.longitude).
+			document.edit_tag.tag_location.value = position.coords.latitude+","+position.coords.longitude;
+	}
 	
 	// One-shot position request.
     navigator.geolocation.getCurrentPosition(showMap);
@@ -85,5 +101,3 @@
 	});
 				
 </script>
-
-

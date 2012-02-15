@@ -1,0 +1,8 @@
+		
+	    <td><%= tag.notes %></td>
+	    <td><%= tag.location %></td>
+	    <td><%= tag.user_id %></td>
+	    <td><%= link_to 'Show', tag %></td>
+	    <td><%= link_to 'Edit', edit_tag_path(tag) %></td>
+	    <td><%= link_to 'Destroy', tag, :confirm => 'Are you sure?', :method => :delete %></td>
+		<!--<td><%= button_to "Delete", tag, :method=>:delete, :class=>:destroy, :confirm => 'Are you sure?' %></td>-->

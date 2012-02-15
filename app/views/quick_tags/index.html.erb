@@ -1,0 +1,88 @@
+<div id="wrapper">
+	<div id="header">
+		<h1>Quick Tags</h1>
+        <a href="<%= root_url %>" class="back"><img src="/images/back.png" alt="Back" /></a>
+    </div><!--close header-->
+    <div id="content">
+    	<div id="interior">
+        	<div style="text-align: center; padding-bottom: 10px;">
+        	<span style="font-family: Helvetica, sans-serif; font-size: 18px;">
+				<a href="<%= new_quick_tag_path %>" style="color: #ff6600; text-decoration: none;">Add Quick Tag</a> | 
+				<!--<a href="#" style="color: #ff6600; text-decoration: none;">Click to Edit then select tag to edit</a></span>-->
+				<ul class="pageitem">
+			            <li class="checkbox">
+							<span class="name">Edit</span>
+							<input name="location" type="checkbox" id="edit_quick_tag" unchecked="true" />
+						</li>
+				</ul>
+            </div>
+			<% if current_user.quick_tags == [] %>
+				<ul class="pageitem">
+	                <li class="quick-tag">
+						<span class="title">No quick tags loaded</span>
+					</li>
+				</ul>
+			<% end %>
+			<% if true %>
+				<% current_user.quick_tags.each do |quick_tag| %>
+					<span class="quickgroup"><%= quick_tag.category %></span>
+	        	    <ul class="pageitem">
+	        	        <li class="quick-tag">
+							<% if quick_tag.location == 1 %>
+								<span class="title" onclick="quick_tag_control(this)" id="<%= quick_tag.id %>"><%= quick_tag.title %>Location</span>
+							<% end %>
+							<% if quick_tag.location == 0 %>
+								<span class="title" onclick="quick_tag_control(this)" id="<%= quick_tag.id %>"><%= quick_tag.title %></span>
+							<% end %>
+						</li>
+	        	    </ul>
+					<% link_to 'Show', quick_tag %>
+					<% link_to 'Edit', edit_quick_tag_path(quick_tag) %>
+					<% link_to 'Destroy', quick_tag, :confirm => 'Are you sure?', :method => :delete %>
+				<% end %>
+			<% end %>
+			<div id="user_id">
+				<input type="text" id="tag_location" />
+			</div>
+		</div><!--close interior-->
+    </div><!--close content-->
+    <div id="footer">
+    	<p>&copy; copyright 2012 Tag Lab</p>
+    </div><!--close footer-->
+</div><!--close wrapper-->   
+
+<script>
+
+	function initialize(){
+		return true;
+	}
+
+	function quick_tag_control(element){
+		if (document.getElementById("edit_quick_tag").checked)
+		{
+			// Load edit page for specific quick tag	
+			window.location.replace("<%= root_url %>quick_tags/"+$(element).attr("id")+"/edit");
+		}
+		else
+		{	
+			var position = document.getElementById("tag_location").value;
+			$.post("/new_quicktag", { user_id: <%= current_user.id %>, id: $(element).attr("id"), location: position } );
+		}
+	}
+	
+	function showMap(position) {
+      		// Show a map centered at (position.coords.latitude, position.coords.longitude).
+			document.getElementById("tag_location").value = position.coords.latitude+","+position.coords.longitude;
+			var location = position.coords.latitude+","+position.coords.longitude;
+			 
+	}
+	
+	// One-shot position request.
+	navigator.geolocation.getCurrentPosition(showMap);
+</script>
+
+		
+
+
+
+

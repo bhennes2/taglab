@@ -11,16 +11,26 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120204203322) do
+ActiveRecord::Schema.define(:version => 20120207170209) do
+
+  create_table "quick_tags", :force => true do |t|
+    t.string   "title"
+    t.string   "category"
+    t.integer  "location"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "user_id"
+  end
 
   create_table "tags", :force => true do |t|
     t.string   "time"
     t.string   "title"
-    t.string   "notes"
+    t.text     "notes",      :limit => 255
     t.string   "location"
     t.string   "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "date"
   end
 
   create_table "users", :force => true do |t|
@@ -28,14 +38,15 @@ ActiveRecord::Schema.define(:version => 20120204203322) do
     t.string   "email"
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "about"
-    t.string   "age"
+    t.text     "about",      :limit => 255
+    t.date     "age",        :limit => 255
     t.string   "sex"
     t.string   "zip_code"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "uid"
     t.string   "provider"
+    t.string   "time_zone"
   end
 
 end
