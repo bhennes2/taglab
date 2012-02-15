@@ -94,8 +94,7 @@
 			</fieldset>
 		<% end %>
 		
-		<%= #Calculation to determine age
-			((Time.now.utc - (current_user.age).to_time.utc)/(31556926)).floor %>
+		<% #Calculation to determine age %>
         <%= link_to "Sign Out", signout_path %>
 		
         </div><!--close interior-->
