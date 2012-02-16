@@ -5,48 +5,74 @@
     </div><!--close header-->
     <div id="content">
     	<div id="interior">
-			<!--<span class="date">Sunday, February 4, 2012</span> -->
-        	    <ul class="pageitem">
 					<script>
-					var display_tags = [
-						<% current_user.tags.each do |tag| %>
-							{
-								"id": <%= tag.id %>,
-								"time": "<%= tag.time.to_i %>",
-								"title": "<%= tag.title %>",
-								"location": "<%= tag.location %>"		
-							}
-							<% if tag != current_user.tags.last %>,<%end%>
-						<% end %>
-					];
-					
-					var sort_by = function(field, reverse, primer){
-	 					var key = function (x) {return primer ? primer(x[field]) : x[field]};
-
-	   					return function (a,b) {
-	       					var A = key(a), B = key(b);
-						    return ((A < B) ? -1 :
-	               			(A > B) ? +1 : 0)) * [-1,1][+!!reverse];                  
+					/*
+						var display_tags = [
+							<% current_user.tags.each do |tag| %>
+								{
+									"id": "<%= tag.id %>",
+									"time": "<%= tag.time.to_i %>",
+									"title": "<%= tag.title %>",
+									"location": "<%= tag.location %>",
+									"date": "<%= Time.at(tag.time.to_i).to_date %>"
+								}
+								<% if tag != current_user.tags.last %>,<%end%>
+							<% end %>
+						];
+						
+						function compareDates(a, b){
+							var dateA = new Date(a.date);
+							var dateB = new Date(b.date);
+							return dateB - dateA;						
 						}
-					}
+						
+						display_tags.sort(compareDates);
+						
+						Array.prototype.unique = function() {
+    						var o = {}, i, l = this.length, r = [];
+						    for(i=0; i<l;i+=1) o[this[i].date] = this[i].date;
+    						for(i in o) r.push(o[i]);
+						    return r;
+						};
+						
+						var display_tags_dummy = display_tags;
+						var unique_dates = display_tags.unique();
+						for( var i=0; i < unique_dates.length; i++){
+							$("li").add("span").addClass("date").append(
+								new Date(unique_dates[i]).getDay());
+							for( var j=0; j < display_tags_dummy.length; j++){
+								if( unique_dates[i] == display_tags_dummy[j].date){
+									//document.write(display_tags_dummy[j].id);
+								}
+							}
+						} */
 					
-					//display_tags.sort(sort_by('time', true, parseInt));
-				
-					</script>					
+					</script>	
 					
-					<% current_user.tags.each do |tag| %>
-						<li class="single-tag">
-							<a href="<%= edit_tag_path(tag) %>">
-								<span class="title"><%= tag.title %></span>
-								<span class="time">
-									<%= Time.at(tag.time.to_i).in_time_zone(current_user.time_zone).strftime("%l:%M%P") %>
-									<% if tag.location != "0" %>
-										<span>Location</span>
-									<% end %>									
-									<!-- Indicate whether or not an image is with the tag-->
-								</span>
-							</a>
-						</li>
+					<% tags_format = Tag.where(:user_id => current_user.id).group("date(time)").order("time") %>
+					<% flag = "" %>
+					<% tags_format.each_cons(2) do |tag, next_tag| %>
+						<% if flag != (Time.at(tag.time.to_i)).to_date %>
+							<span class="date"><%= (Time.at(tag.time.to_i)).strftime("%A, %B %-d, %Y") %></span>
+        	    				<ul class="pageitem">
+						<% end %>
+									<li class="single-tag">
+										<a href="<%= edit_tag_path(tag) %>">
+											<span class="title"><%= tag.title %></span>
+											<span class="time">
+												<%= Time.at(tag.time.to_i).in_time_zone(current_user.time_zone).strftime("%l:%M%P") %>
+												<% if tag.location != "0" %>
+													<span>Location</span>
+												<% end %>									
+												<!-- Indicate whether or not an image is with the tag-->
+											</span>
+										</a>
+									</li>
+						<% if (Time.at(next_tag.time.to_i)).to_date != (Time.at(tag.time.to_i)).to_date %>
+								</ul>
+						<% end %>
+						<% flag = (Time.at(tag.time.to_i)).to_date %>								
+								
 					<% end %>					
 					<% if current_user.tags == [] %>
 						<li class="single-tag">
@@ -62,6 +88,11 @@
     	<p>&copy; copyright 2012 Tag Lab</p>
     </div><!--close footer-->
 </div><!--close wrapper-->    
+
+<script>
+	function initialize(){return true;}
+
+</script>
 				
 		
 		

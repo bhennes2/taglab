@@ -24,7 +24,8 @@
 				</ul>
 			<% end %>
 			<% if true %>
-				<% current_user.quick_tags.each do |quick_tag| %>
+				<% #quick_tags_format = QuickTag.where(:user_id => current_user.id).group("category").order("category") %>
+				<% quick_tags_format.each do |quick_tag| %>
 					<span class="quickgroup"><%= quick_tag.category %></span>
 	        	    <ul class="pageitem">
 	        	        <li class="quick-tag">

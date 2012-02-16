@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(:version => 20120207170209) do
     t.integer  "location"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "user_id"
+    t.integer  "user_id"
   end
 
   create_table "tags", :force => true do |t|
@@ -27,10 +27,10 @@ ActiveRecord::Schema.define(:version => 20120207170209) do
     t.string   "title"
     t.text     "notes",      :limit => 255
     t.string   "location"
-    t.string   "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "date"
+    t.integer  "user_id"
   end
 
   create_table "users", :force => true do |t|
