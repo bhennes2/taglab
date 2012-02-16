@@ -49,8 +49,7 @@
 					
 					</script>	
 					
-					<% tags_format = Tag.where(:user_id => current_user.id).order("date(time) DESC").group("date(time), 
-								id, time, title, notes, location, created_at, updated_at, date, user_id") %>
+					<% tags_format = Tag.where(:user_id => current_user.id).order("date(time) DESC").group{|i| i.date(time)} %>
 					<% flag = "" %>
 					<% tags_format.each_cons(2) do |tag, next_tag| %>
 						<% if flag != (Time.at(tag.time.to_i)).to_date %>
