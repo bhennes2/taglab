@@ -1,0 +1,34 @@
+   
+<h1>Listing tags</h1>
+<%= link_to 'Back', admin_path %>
+<table>
+  <tr>
+  	<th>id</th>
+    <th>Time</th>
+    <th>Title</th>
+    <th>Notes</th>
+    <th>Location</th>
+    <th>Date</th>
+    <th>User ID</th>
+    <th>Created At</th>
+    <th>Updated At</th>
+  </tr>
+	
+<% @tags.each do |tag| %>
+  <tr>
+  	<td><%= tag.id %></td>
+    <td><%= tag.time %></td>
+    <td><%= tag.title %></td>
+    <td><%= tag.notes %></td>
+    <td><%= tag.date %></td>
+    <td><%= tag.user_id %></td>
+    <td><%= tag.created_at %></td>
+    <td><%= tag.updated_at %></td>
+    <td><%= link_to 'Destroy', tag, :confirm => 'Are you sure?', :method => :delete %></td>
+	</tr>
+<% end %>
+</table>
+
+<br />
+
+

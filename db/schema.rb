@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120207170209) do
+ActiveRecord::Schema.define(:version => 20120204203332) do
 
   create_table "quick_tags", :force => true do |t|
     t.string   "title"
@@ -39,7 +39,6 @@ ActiveRecord::Schema.define(:version => 20120207170209) do
     t.string   "first_name"
     t.string   "last_name"
     t.text     "about",      :limit => 255
-    t.date     "age",        :limit => 255
     t.string   "sex"
     t.string   "zip_code"
     t.datetime "created_at"
@@ -47,6 +46,7 @@ ActiveRecord::Schema.define(:version => 20120207170209) do
     t.string   "uid"
     t.string   "provider"
     t.string   "time_zone"
+    t.date     "age"
   end
 
 end

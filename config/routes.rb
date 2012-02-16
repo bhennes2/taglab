@@ -70,11 +70,11 @@ Quicktag::Application.routes.draw do
   # Provide route for viewing help page
   match "/help" => "help#index"
   
-  # Provide route for help page
-  #match "/help" => "help#show"
+  # Provide route for admin pages
+  match "/admin" => "admin#index"
+  match "/admin/users" => "admin#users"
+  match "/admin/tags" => "admin#tags"
   
-  # Provide path for help.html
-  #match '/help' => 'home#popular', :as => :help
   
   # Resource for autocomplete
   resources :tags do
