@@ -53,8 +53,19 @@
 					<% flag = "" %>
 					<% tags_format.each_cons(2) do |tag, next_tag| %>
 						<% if flag != (Time.at(tag.time.to_i)).to_date %>
-							<span class="date"><%= (Time.at(tag.time.to_i)).strftime("%A, %B %-d, %Y") %></span>
-        	    				<ul class="pageitem">
+							<span class="date"><img id="button<%= tag.id %>" class="plus-minus" src="/images/minus.gif" onclick = "$('#<%= tag.id %>').toggle('slow', function() { 
+								if( $('#button<%= tag.id %>').attr('src') == '/images/minus.gif'){
+									$('#button<%= tag.id %>').attr('src', '/images/plus.gif');
+								}
+								else{
+									$('#button<%= tag.id %>').attr('src', '/images/minus.gif');
+								}
+								});"/>
+								
+								
+								
+							<%= (Time.at(tag.time.to_i).in_time_zone(current_user.time_zone)).strftime("%A, %B %-d, %Y") %></span>
+        	    				<ul class="pageitem" id="<%= tag.id %>">
 						<% end %>
 									<li class="single-tag">
 										<a href="<%= edit_tag_path(tag) %>">
@@ -62,7 +73,8 @@
 											<span class="time">
 												<%= Time.at(tag.time.to_i).in_time_zone(current_user.time_zone).strftime("%l:%M%P") %>
 												<% if tag.location != "0" %>
-													<span>Location</span>
+													<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/images/location-arrow.png" /></span>
+													
 												<% end %>									
 												<!-- Indicate whether or not an image is with the tag-->
 											</span>

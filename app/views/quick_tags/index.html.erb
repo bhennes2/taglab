@@ -28,13 +28,23 @@
 				<% flag = "" %>
 				<% quick_tags_format.each_cons(2) do |quick_tag, next_quick_tag| %>
 					<% if flag != quick_tag.category.downcase %>
-						<span class="quickgroup"><%= quick_tag.category %></span>
-		        	    <ul class="pageitem">
+						<span class="quickgroup">
+						<img id="button<%= quick_tag.category %>" class="plus-minus" src="/images/minus.gif" onclick = "$('#<%= quick_tag.category %>').toggle('slow', function() { 
+								if( $('#button<%= quick_tag.category %>').attr('src') == '/images/minus.gif'){
+									$('#button<%= quick_tag.category %>').attr('src', '/images/plus.gif');
+								}
+								else{
+									$('#button<%= quick_tag.category %>').attr('src', '/images/minus.gif');
+								}
+								});"/>
+						<%= quick_tag.category %></span>
+		        	    <ul class="pageitem" id="<%= quick_tag.category %>">
 					<% end %>
 		        	        <li class="quick-tag">
 								<% if quick_tag.location == 1 %>
-									<span class="title" onclick="quick_tag_control(this)" id="<%= quick_tag.id %>"><%= quick_tag.title %></span>
-									<span class="location">Location</span>
+									<span class="title" onclick="quick_tag_control(this)" id="<%= quick_tag.id %>"><%= quick_tag.title %>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/images/location-arrow.png" />
+									</span>
 								<% end %>
 								<% if quick_tag.location == 0 %>
 									<span class="title" onclick="quick_tag_control(this)" id="<%= quick_tag.id %>"><%= quick_tag.title %></span>

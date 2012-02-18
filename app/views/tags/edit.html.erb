@@ -236,9 +236,9 @@
 					
 
 			<% end %>
-			<%= link_to 'Destroy', @tag, :confirm => 'Are you sure?', :method => :delete %>
 			
-			
+			<%= button_to 'Destroy', @tag, :onclick => "return confirm('Are you sure you want to delete?')", :method => :delete %>
+						
         </div><!--close interior-->
     </div><!--close content-->
     <div id="footer">
