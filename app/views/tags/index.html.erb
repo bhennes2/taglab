@@ -5,50 +5,7 @@
     </div><!--close header-->
     <div id="content">
     	<div id="interior">
-					<script>
-					/*
-						var display_tags = [
-							<% current_user.tags.each do |tag| %>
-								{
-									"id": "<%= tag.id %>",
-									"time": "<%= tag.time.to_i %>",
-									"title": "<%= tag.title %>",
-									"location": "<%= tag.location %>",
-									"date": "<%= Time.at(tag.time.to_i).to_date %>"
-								}
-								<% if tag != current_user.tags.last %>,<%end%>
-							<% end %>
-						];
-						
-						function compareDates(a, b){
-							var dateA = new Date(a.date);
-							var dateB = new Date(b.date);
-							return dateB - dateA;						
-						}
-						
-						display_tags.sort(compareDates);
-						
-						Array.prototype.unique = function() {
-    						var o = {}, i, l = this.length, r = [];
-						    for(i=0; i<l;i+=1) o[this[i].date] = this[i].date;
-    						for(i in o) r.push(o[i]);
-						    return r;
-						};
-						
-						var display_tags_dummy = display_tags;
-						var unique_dates = display_tags.unique();
-						for( var i=0; i < unique_dates.length; i++){
-							$("li").add("span").addClass("date").append(
-								new Date(unique_dates[i]).getDay());
-							for( var j=0; j < display_tags_dummy.length; j++){
-								if( unique_dates[i] == display_tags_dummy[j].date){
-									//document.write(display_tags_dummy[j].id);
-								}
-							}
-						} */
-					
-					</script>	
-					
+			
 					<% tags_format = Tag.where(:user_id => current_user.id).order("time DESC") %>
 					<% flag = "" %>
 					<% tags_format.each_cons(2) do |tag, next_tag| %>
@@ -70,6 +27,7 @@
 									<li class="single-tag">
 										<a href="<%= edit_tag_path(tag) %>">
 											<span class="title"><%= tag.title %></span>
+										</a>
 											<span class="time">
 												<%= Time.at(tag.time.to_i).in_time_zone(current_user.time_zone).strftime("%l:%M%P") %>
 												<% if tag.location != "0" %>
@@ -77,14 +35,18 @@
 													
 												<% end %>									
 												<!-- Indicate whether or not an image is with the tag-->
-											</span>
-										</a>
+												<%= form_tag tag, :method => :delete, :class => "delete_tag" do %>
+													<%= image_submit_tag "../images/close_icon.gif", :onclick => "return confirm('Are you sure you want to delete?')" %>
+												<% end %>
+											</span>											
+										
+										
 									</li>
 						<% if (Time.at(next_tag.time.to_i).in_time_zone(current_user.time_zone)).to_date != (Time.at(tag.time.to_i).in_time_zone(current_user.time_zone)).to_date %>
 								</ul>
 						<% end %>
 						<% flag = (Time.at(tag.time.to_i).in_time_zone(current_user.time_zone)).to_date %>								
-								
+												
 					<% end %>					
 					<% if current_user.tags == [] %>
 						<li class="single-tag">

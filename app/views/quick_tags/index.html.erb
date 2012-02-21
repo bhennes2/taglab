@@ -9,12 +9,10 @@
         	<span style="font-family: Helvetica, sans-serif; font-size: 18px;">
 				<a href="<%= new_quick_tag_path %>" style="color: #ff6600; text-decoration: none;">Add Quick Tag</a> | 
 				<!--<a href="#" style="color: #ff6600; text-decoration: none;">Click to Edit then select tag to edit</a></span>-->
-				<ul class="pageitem">
-			            <li class="checkbox">
-							<span class="name">Edit</span>
-							<input name="location" type="checkbox" id="edit_quick_tag" unchecked="true" />
-						</li>
-				</ul>
+						        
+				<span class="name">Edit</span>
+				<input name="location" type="checkbox" id="edit_quick_tag" unchecked="true" />
+					
             </div>
 			<% if current_user.quick_tags == [] %>
 				<ul class="pageitem">

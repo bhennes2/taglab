@@ -92,29 +92,27 @@ class TagsController < ApplicationController
   def quicktag
   
   	# Initialize a new tag
-    tag = Tag.new
+    @tag = Tag.new
 	# Set tag user_id to id of current_user
-	tag.user_id = params[:user_id]
+	@tag.user_id = params[:user_id]
 	
 	# Set title equal to quicktag title
 	quicktag = QuickTag.find(params[:id])
-	tag.title = quicktag.title
+	@tag.title = quicktag.title
 	
 	# Set the time equal to the current time
-	tag.time = Time.now.utc.to_i
+	@tag.time = Time.now.utc.to_i
 	
 	# Set the location
 	if quicktag.location == 0
-		tag.location = 0
+		@tag.location = 0
 	end
 	if quicktag.location == 1
-		tag.location = params[:location]
+		@tag.location = params[:location]
 	end 
 	
-	tag.save
-	
-	#redirect_to root_url
-	
+	@tag.save
+				
     #respond_to do |format|
     	#if tag.save
 			#format.html { redirect_to(quick_tags_path)}
