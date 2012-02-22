@@ -24,7 +24,7 @@
 							<%= (Time.at(tag.time.to_i).in_time_zone(current_user.time_zone)).strftime("%A, %B %-d, %Y") %></span>
         	    				<ul class="pageitem" id="<%= tag.id %>">
 						<% end %>
-									<li class="single-tag">
+									<li class="single-tag" id="<%= tag.id %>">
 										<a href="<%= edit_tag_path(tag) %>">
 											<span class="title"><%= tag.title %></span>
 										</a>
@@ -35,9 +35,9 @@
 													
 												<% end %>									
 												<!-- Indicate whether or not an image is with the tag-->
-												<%= form_tag tag, :method => :delete, :class => "delete_tag" do %>
-													<%= image_submit_tag "../images/close_icon.gif", :onclick => "return confirm('Are you sure you want to delete?')" %>
-												<% end %>
+												<!--<% form_tag tag, :method => :delete, :class => "delete_tag" do %>
+													<% image_submit_tag "../images/close_icon.gif", :onclick => "return confirm('Are you sure you want to delete?')" %>
+												<% end %>-->
 											</span>											
 									</li>
 						<% if (Time.at(next_tag.time.to_i).in_time_zone(current_user.time_zone)).to_date != (Time.at(tag.time.to_i).in_time_zone(current_user.time_zone)).to_date %>
@@ -54,21 +54,6 @@
 						</li>
 					<% end %>
 				</ul>
-				
-				<!--<div data-role="page" id="swipedelete">
-						<div data-role="header">
-							<h1>jQuery Mobile - Swipe to Delete</h1>
-						</div>
-					<div data-role="content">
-						<ul data-role="listview" data-inset="true" >
-							<li data-role="list-divider">Swipe to Delete</li>
-							<li id="listitem"><a href="#">Item One</a></li>
-							<li><a href="#">Item Two</a></li>
-							<li><a href="#">Item Three</a></li>
-							<li><a href="#">Item Four</a></li>
-						</ul>
-					</div>
-				</div>-->
 		</div><!--close interior-->
     </div><!--close content-->
     <div id="footer">
@@ -80,14 +65,20 @@
 
 	function initialize(){return true;}
 	
-	$(".single-tag").swiperight(function(){
+	/*$(".single-tag").swiperight(function(){
 		var $li = $(this);
 		var $deleteBtn = $('<a>Delete</a>').attr({
-							'class': 'aDeleteBtn ui-btn-up-r',
-							'href': 'some/link/page.html?nID=' + $li.data('nid')
+							class: 'aDeleteBtn ui-btn-up-r',
+							href: '/tags/' + $li.attr('id') + '/',
+							onclick: 'return confirm("Are you sure you want to delete?")',
+							method: 'delete'
 		});
 		$li.prepend($deleteBtn);
 		
+	});*/
+	
+	$("#header").swipeleft(function(){
+		$.mobile.changePage("<%= root_url %>");		
 	});
 	
 	/*

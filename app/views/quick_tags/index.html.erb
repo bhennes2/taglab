@@ -7,11 +7,11 @@
     	<div id="interior">
         	<div style="text-align: center; padding-bottom: 10px;">
         	<span style="font-family: Helvetica, sans-serif; font-size: 18px;">
-				<a href="<%= new_quick_tag_path %>" style="color: #ff6600; text-decoration: none;">Add Quick Tag</a> | 
+				<a href="<%= new_quick_tag_path %>" style="color: #ff6600; text-decoration: none;">Add Quick Tag</a> 
 				<!--<a href="#" style="color: #ff6600; text-decoration: none;">Click to Edit then select tag to edit</a></span>-->
 						        
-				<span class="name">Edit</span>
-				<input name="location" type="checkbox" id="edit_quick_tag" unchecked="true" />
+				<!--<span class="name">Edit</span>
+				<input name="location" type="checkbox" id="edit_quick_tag" unchecked="true" />-->
 					
             </div>
 			<% if current_user.quick_tags == [] %>
@@ -38,7 +38,7 @@
 						<%= quick_tag.category %></span>
 		        	    <ul class="pageitem" id="<%= quick_tag.category %>">
 					<% end %>
-		        	        <li class="quick-tag">
+		        	        <li class="quick-tag" id="<%= quick_tag.id %>" >
 								<% if quick_tag.location == 1 %>
 									<span class="title" onclick="quick_tag_control(this)" id="<%= quick_tag.id %>"><%= quick_tag.title %>
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/images/location-arrow.png" />
@@ -69,14 +69,29 @@
 	function initialize(){
 		return true;
 	}
+	
+	$(".quick-tag").swiperight(function(){
+		var $li = $(this);
+		var $deleteBtn = $('<a>Edit</a>').attr({
+							class: 'aDeleteBtn ui-btn-up-r',
+							href: '<%= root_url %>quick_tags/'+ $li.attr('id') +'/edit',
+							method: 'get'
+		});
+		$li.prepend($deleteBtn);
+		
+	});
+	
+	$("#header").swipeleft(function(){
+		$.mobile.changePage("<%= root_url %>");		
+	});
 
 	function quick_tag_control(element){
-		if (document.getElementById("edit_quick_tag").checked)
+		/*if (document.getElementById("edit_quick_tag").checked)
 		{
 			// Load edit page for specific quick tag	
 			window.location.replace("<%= root_url %>quick_tags/"+$(element).attr("id")+"/edit");
-		}
-		else
+		}*/
+		if (true)
 		{	
 			var position = document.getElementById("tag_location").value;
 			$.post("/new_quicktag", { user_id: <%= current_user.id %>, id: $(element).attr("id"), location: position } );

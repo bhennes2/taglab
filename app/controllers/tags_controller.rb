@@ -82,7 +82,7 @@ class TagsController < ApplicationController
     @tag.destroy
 		
     respond_to do |format|
-      format.html { redirect_to(tags_url) }
+      format.html { redirect_to(tags_path) }
       format.xml  { head :ok }
     end
   end
