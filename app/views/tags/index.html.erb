@@ -62,10 +62,10 @@
 					<div data-role="content">
 						<ul data-role="listview" data-inset="true" >
 							<li data-role="list-divider">Swipe to Delete</li>
-							<li><a href="page.html">Item One</a></li>
-							<li><a href="page.html">Item Two</a></li>
-							<li><a href="page.html">Item Three</a></li>
-							<li><a href="page.html">Item Four</a></li>
+							<li><a href="#">Item One</a></li>
+							<li><a href="#">Item Two</a></li>
+							<li><a href="#">Item Three</a></li>
+							<li><a href="#">Item Four</a></li>
 						</ul>
 					</div>
 				</div>
@@ -81,26 +81,27 @@
 	function initialize(){return true;}
 	
 	$(function(){
-	$('div').live('pageshow',function(event,ui){
-		if ( event.target.id.indexOf('swipedelete') >= 0) {
-			// remove any existing swipe areas
-			$('.aDeleteBtn').remove();
-			// add swipe event to the list item
-			$('ul li').bind('swiperight', function(e){
-				// reference the just swiped list item
-				var $li = $(this);
-				// remove all buttons first
+		$('div').live('pageshow',function(event,ui){
+			if ( event.target.id.indexOf('swipedelete') >= 0) {
+				// remove any existing swipe areas
 				$('.aDeleteBtn').remove();
-				// create buttons and div container
-				var $deleteBtn = $('<a>Delete</a>').attr({
-						'class': 'aDeleteBtn ui-btn-up-r',
-						'href': 'some/link/page.html?nID=' + $li.data('nid')
-					});
-				// insert swipe div into list item
-				$li.prepend($deleteBtn);
-			});
-		})
-	}});
+				// add swipe event to the list item
+				$('ul li').bind('swiperight', function(e){
+					// reference the just swiped list item
+					var $li = $(this);
+					// remove all buttons first
+				$('.aDeleteBtn').remove();
+					// create buttons and div container
+					document.write("hello");
+					var $deleteBtn = $('<a>Delete</a>').attr({
+							'class': 'aDeleteBtn ui-btn-up-r',
+							'href': 'some/link/page.html?nID=' + $li.data('nid')
+						});
+					// insert swipe div into list item
+					$li.prepend($deleteBtn);
+				});
+			})
+		}};
 
 </script>
 				
