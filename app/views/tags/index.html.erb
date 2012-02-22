@@ -62,7 +62,7 @@
 					<div data-role="content">
 						<ul data-role="listview" data-inset="true" >
 							<li data-role="list-divider">Swipe to Delete</li>
-							<li><a href="#">Item One</a></li>
+							<li id="listitem"><a href="#">Item One</a></li>
 							<li><a href="#">Item Two</a></li>
 							<li><a href="#">Item Three</a></li>
 							<li><a href="#">Item Four</a></li>
@@ -80,6 +80,11 @@
 
 	function initialize(){return true;}
 	
+	$("#listitem").swiperight(function(){
+		document.write("hello");
+	});
+	
+	/*
 	$(function(){
 		$('div').live('pageshow',function(event,ui){
 				if ( event.target.id.indexOf('swipedelete') >= 0) {
@@ -101,7 +106,7 @@
 						$li.prepend($deleteBtn);
 					});
 			}
-			})});
+			})});*/
 
 </script>
 				
