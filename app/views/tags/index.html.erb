@@ -39,8 +39,6 @@
 													<%= image_submit_tag "../images/close_icon.gif", :onclick => "return confirm('Are you sure you want to delete?')" %>
 												<% end %>
 											</span>											
-										
-										
 									</li>
 						<% if (Time.at(next_tag.time.to_i).in_time_zone(current_user.time_zone)).to_date != (Time.at(tag.time.to_i).in_time_zone(current_user.time_zone)).to_date %>
 								</ul>
@@ -56,6 +54,21 @@
 						</li>
 					<% end %>
 				</ul>
+				
+				<div data-role="page" id="swipedelete">
+						<div data-role="header">
+							<h1>jQuery Mobile - Swipe to Delete</h1>
+						</div>
+					<div data-role="content">
+						<ul data-role="listview" data-inset="true" >
+							<li data-role="list-divider">Swipe to Delete</li>
+							<li><a href="page.html">Item One</a></li>
+							<li><a href="page.html">Item Two</a></li>
+							<li><a href="page.html">Item Three</a></li>
+							<li><a href="page.html">Item Four</a></li>
+						</ul>
+					</div>
+				</div>
 		</div><!--close interior-->
     </div><!--close content-->
     <div id="footer">
@@ -64,7 +77,30 @@
 </div><!--close wrapper-->    
 
 <script>
+
 	function initialize(){return true;}
+	
+	$(function(){
+	$('div').live('pageshow',function(event,ui){
+		if ( event.target.id.indexOf('swipedelete') >= 0) {
+			// remove any existing swipe areas
+			$('.aDeleteBtn').remove();
+			// add swipe event to the list item
+			$('ul li').bind('swiperight', function(e){
+				// reference the just swiped list item
+				var $li = $(this);
+				// remove all buttons first
+				$('.aDeleteBtn').remove();
+				// create buttons and div container
+				var $deleteBtn = $('<a>Delete</a>').attr({
+						'class': 'aDeleteBtn ui-btn-up-r',
+						'href': 'some/link/page.html?nID=' + $li.data('nid')
+					});
+				// insert swipe div into list item
+				$li.prepend($deleteBtn);
+			});
+		})
+	}});
 
 </script>
 				
