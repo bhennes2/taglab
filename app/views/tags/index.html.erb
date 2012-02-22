@@ -55,7 +55,7 @@
 					<% end %>
 				</ul>
 				
-				<div data-role="page" id="swipedelete">
+				<!--<div data-role="page" id="swipedelete">
 						<div data-role="header">
 							<h1>jQuery Mobile - Swipe to Delete</h1>
 						</div>
@@ -68,7 +68,7 @@
 							<li><a href="#">Item Four</a></li>
 						</ul>
 					</div>
-				</div>
+				</div>-->
 		</div><!--close interior-->
     </div><!--close content-->
     <div id="footer">
@@ -80,7 +80,7 @@
 
 	function initialize(){return true;}
 	
-	$("#listitem").swiperight(function(){
+	$(".single-tag").swiperight(function(){
 		var $li = $(this);
 		var $deleteBtn = $('<a>Delete</a>').attr({
 							'class': 'aDeleteBtn ui-btn-up-r',
