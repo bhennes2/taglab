@@ -81,7 +81,13 @@
 	function initialize(){return true;}
 	
 	$("#listitem").swiperight(function(){
-		document.write("hello");
+		var $li = $(this);
+		var $deleteBtn = $('<a>Delete</a>').attr({
+							'class': 'aDeleteBtn ui-btn-up-r',
+							'href': 'some/link/page.html?nID=' + $li.data('nid')
+		});
+		$li.prepend($deleteBtn);
+		
 	});
 	
 	/*
