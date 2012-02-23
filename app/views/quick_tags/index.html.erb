@@ -10,8 +10,8 @@
 				<a href="<%= new_quick_tag_path %>" style="color: #ff6600; text-decoration: none;">Add Quick Tag</a> 
 				<!--<a href="#" style="color: #ff6600; text-decoration: none;">Click to Edit then select tag to edit</a></span>-->
 						        
-				<!--<span class="name">Edit</span>
-				<input name="location" type="checkbox" id="edit_quick_tag" unchecked="true" />-->
+				<span class="name">Edit</span>
+				<input name="location" type="checkbox" id="edit_quick_tag" unchecked="true" />
 					
             </div>
 			<% if current_user.quick_tags == [] %>
@@ -86,15 +86,16 @@
 	});
 
 	function quick_tag_control(element){
-		/*if (document.getElementById("edit_quick_tag").checked)
+		if (document.getElementById("edit_quick_tag").checked)
 		{
 			// Load edit page for specific quick tag	
 			window.location.replace("<%= root_url %>quick_tags/"+$(element).attr("id")+"/edit");
-		}*/
+		}
 		if (true)
 		{	
 			var position = document.getElementById("tag_location").value;
 			$.post("/new_quicktag", { user_id: <%= current_user.id %>, id: $(element).attr("id"), location: position } );
+			window.location.replace("<%= root_url %>tags/");
 		}
 	}
 	

@@ -59,12 +59,11 @@
         			<ul class="pageitem">
         				<li class="checkbox" style="position:relative">
 							<span class="name" style="position:absolute;">Birthday</span>
-								<input type="date"></input>
-								<%= f.date_select :age, :start_year => (Time.now.year - 100), :use_short_month => true, :order => [:month, :day, :year] %>
-								
+								<!--<input type="date"></input>-->
 						</li>
+						<%= f.date_select :age, :start_year => (Time.now.year - 100), :use_short_month => true, :order => [:month, :day, :year] %>
 					</ul>
-					
+										
 					<ul class="pageitem">
 						<li class="bigfield">
 							<!--<input placeholder="Zip Code" type="text" maxlength="5" />-->
@@ -83,14 +82,14 @@
 					<ul class="pageitem">      
 						<li class="button">
 							<!--<input name="Submit" type="submit" value="SUBMIT" class="orange" />-->
-							<%= f.submit :value => "SUBMIT", :class => "orange" %>
+							<%= f.submit :value => "UPDATE", :class => "orange" %>
 						</li>
 					</ul>
 			</fieldset>
 		<% end %>
 		
 		<% #Calculation to determine age %>
-        <%= link_to "Sign Out", signout_path %>
+
 		
         </div><!--close interior-->
     </div><!--close content-->

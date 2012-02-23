@@ -26,54 +26,9 @@
 					<ul class="pageitem">
             			<li class="checkbox" style="position:relative">
 							<span class="name" style="position:absolute;">Date</span>
-								<input type="date" id="date" value="<%= Time.at(@tag.time.to_i).in_time_zone(current_user.time_zone).to_date %>"></input>
+								<!--<input type="date" id="date" value="<%= Time.at(@tag.time.to_i).in_time_zone(current_user.time_zone).to_date %>"></input>-->
 						</li>
-            			<li class="checkbox" style="position:relative">
-							<span class="name" style="position:absolute;">Time</span>
-								<input type="time" value="<%= Time.at(@tag.time.to_i).in_time_zone(current_user.time_zone).to_time %>"></input>
-						</li>
-						
-		   			</ul>
-					<ul class="pageitem">
-            			<li class="textbox">
-							<!--<textarea placeholder="Notes" name="TextArea" rows="4"><%= @tag.notes %></textarea>-->
-							<%= f.text_area :notes, :placeholder => "Notes", :rows => "4" %>
-						</li>
-					</ul>
-					<ul class="pageitem">
-            			<li class="checkbox"><span class="name">Location</span>
-							<% if @tag.location != "0" %>
-								<!--<input name="location" id="location" type="checkbox" value="<%= @tag.location %>" checked onclick = "load_location();" />-->
-								<%= f.check_box :location, { :checked => true } %>
-						</li>
-							<% else %>						
-								<!--<input name="location" id="location" type="checkbox" onclick = "load_location();"/></li>-->
-								<%= f.check_box :location, { :value => "hello" }  %>
-							<% end %>
-						</li>
-					</ul>
-					<% if @tag.location != "0" %>
-						<ul class="pageitem" style="padding: 8px 0 4px 8px;" onLoad = "initialize();">
-        					<!-- Insert map w/ Google API -->
-							<!--<iframe width="264" height="264" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=b+rose+salon&amp;aq=&amp;sll=41.936402,-87.663056&amp;sspn=0.015036,0.032101&amp;ie=UTF8&amp;hq=b+rose+salon&amp;hnear=&amp;t=m&amp;cid=10910527162893858754&amp;ll=41.943404,-87.664461&amp;spn=0.016726,0.0424&amp;z=14&amp;iwloc=&amp;output=embed"></iframe> -->
-							<div id="map_canvas" style=" height: 264px; width: 264px;">
-								
-							</div>
-			        	</ul>
-					<% end %>
-						
-					<div id="user_id">
-    				    <%= f.text_field :user_id %>
-  					</div>
-					<ul class="pageitem">
-						<li class="button">
-							<!--<input name="Submit" type="submit" value="SUBMIT" class="orange" />-->
-							<%= f.submit :class => "orange", :value => "SUBMIT" %>
-
-						</li>
-					</ul>
-	
-					<% date_of_tag = Time.at(@tag.time.to_i).in_time_zone(current_user.time_zone).to_date %>
+								<% date_of_tag = Time.at(@tag.time.to_i).in_time_zone(current_user.time_zone).to_date %>
 					<% select_date date_of_tag, :order => [:month, :day, :year] %>
 					
 					<select id="date_month">
@@ -129,7 +84,12 @@
 						<option value="<%= date_year %>"><%= date_year %></option>
 						<option value="<%= date_year + 1 %>"><%= date_year + 1 %></option>
 					</select>
-					<select id="date_hour">
+						
+            			<li class="checkbox" style="position:relative">
+							<span class="name" style="position:absolute;">Time</span>
+								<!--<input type="time" value="<%= Time.at(@tag.time.to_i).in_time_zone(current_user.time_zone).to_time %>"></input>-->
+						</li>
+						<select id="date_hour">
 						<option value="00">00</option>
 						<option value="01">01</option>
 						<option value="02">02</option>
@@ -217,6 +177,48 @@
 						<option value="58">58</option>
 						<option value="59">59</option>
 					</select>
+		   			</ul>
+					<ul class="pageitem">
+            			<li class="textbox">
+							<!--<textarea placeholder="Notes" name="TextArea" rows="4"><%= @tag.notes %></textarea>-->
+							<%= f.text_area :notes, :placeholder => "Notes", :rows => "4" %>
+						</li>
+					</ul>
+					<ul class="pageitem">
+            			<li class="checkbox"><span class="name">Location</span>
+							<% if @tag.location != "0" %>
+								<!--<input name="location" id="location" type="checkbox" value="<%= @tag.location %>" checked onclick = "load_location();" />-->
+								<%= f.check_box :location, { :checked => true } %>
+						</li>
+							<% else %>						
+								<!--<input name="location" id="location" type="checkbox" onclick = "load_location();"/></li>-->
+								<%= f.check_box :location, { :value => "hello" }  %>
+							<% end %>
+						</li>
+					</ul>
+					<% if @tag.location != "0" %>
+						<ul class="pageitem" style="padding: 8px 0 4px 8px;" onLoad = "initialize();">
+        					<!-- Insert map w/ Google API -->
+							<!--<iframe width="264" height="264" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=b+rose+salon&amp;aq=&amp;sll=41.936402,-87.663056&amp;sspn=0.015036,0.032101&amp;ie=UTF8&amp;hq=b+rose+salon&amp;hnear=&amp;t=m&amp;cid=10910527162893858754&amp;ll=41.943404,-87.664461&amp;spn=0.016726,0.0424&amp;z=14&amp;iwloc=&amp;output=embed"></iframe> -->
+							<div id="map_canvas" style=" height: 264px; width: 264px;">
+								
+							</div>
+			        	</ul>
+					<% end %>
+						
+					<div id="user_id">
+    				    <%= f.text_field :user_id %>
+  					</div>
+					<ul class="pageitem">
+						<li class="button">
+							<!--<input name="Submit" type="submit" value="SUBMIT" class="orange" />-->
+							<%= f.submit :class => "orange", :value => "UPDATE" %>
+
+						</li>
+					</ul>
+	
+					
+					
 					
 					
 					
