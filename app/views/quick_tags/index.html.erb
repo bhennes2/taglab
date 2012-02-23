@@ -95,7 +95,7 @@
 		{	
 			var position = document.getElementById("tag_location").value;
 			$.post("/new_quicktag", { user_id: <%= current_user.id %>, id: $(element).attr("id"), location: position } );
-			window.location.replace("<%= root_url %>tags/");
+			//window.location.replace("<%= root_url %>tags/");
 		}
 	}
 	
