@@ -59,11 +59,12 @@
         			<ul class="pageitem">
         				<li class="checkbox" style="position:relative">
 							<span class="name" style="position:absolute;">Birthday</span>
-								<!--<input type="date"></input>-->
+								<input type="date"></input>
+								<%= f.date_select :age, :start_year => (Time.now.year - 100), :use_short_month => true, :order => [:month, :day, :year] %>
 								
 						</li>
 					</ul>
-					<%= f.date_select :age, :start_year => (Time.now.year - 100), :use_short_month => true, :order => [:month, :day, :year] %>
+					
 					<ul class="pageitem">
 						<li class="bigfield">
 							<!--<input placeholder="Zip Code" type="text" maxlength="5" />-->
@@ -72,13 +73,7 @@
 					</ul>            
 					<ul class="pageitem">
 						<li class="select">
-							<!--<select name="timezone">
-								<option value="0">Time Zone</option>
-								<option value="1">Pacific</option>
-	   							<option value="2">Mountain</option>
-								<option value="3">Central</option>
-								<option value="4">Eastern</option>
-							</select>--><span class="arrow"></span> 
+							<span class="arrow"></span> 
 							<%= f.time_zone_select :time_zone %>
 						</li>
 					</ul>   
