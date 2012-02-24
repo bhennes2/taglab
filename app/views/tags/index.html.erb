@@ -32,7 +32,7 @@
 											<span class="time">
 												<%= Time.at(tag.time.to_i).in_time_zone(current_user.time_zone).strftime("%l:%M%P") %>
 												<% if tag.location != "0" %>
-													<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/images/location-arrow.png" /></span>
+													<span><img class="location-arrow" src="/images/location.png" /></span>
 													
 												<% end %>									
 												<!-- Indicate whether or not an image is with the tag-->

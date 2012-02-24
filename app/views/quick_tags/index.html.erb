@@ -41,7 +41,7 @@
 		        	        <li class="quick-tag" id="<%= quick_tag.id %>" >
 								<% if quick_tag.location == 1 %>
 									<span class="title" onclick="quick_tag_control(this)" id="<%= quick_tag.id %>"><%= quick_tag.title %>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/images/location-arrow.png" />
+										<img class="location-arrow" src="/images/location.png" />
 									</span>
 								<% end %>
 								<% if quick_tag.location == 0 %>

@@ -530,6 +530,12 @@ select {
     display: none;
 }
 
+.location-arrow {
+	float: right;
+	padding-right: 20px;
+}
+
+
 .delete_tag {
 	float: right;
 	padding-right: 10px;
