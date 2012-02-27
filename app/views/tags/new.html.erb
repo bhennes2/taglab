@@ -101,10 +101,10 @@
 	}
 					
 	var agent=navigator.userAgent.toLowerCase();
-	var is_apple = (agent.indexOf('iphone' || 'ipad')!=-1);
-	document.write(agent);
-	document.write(is_apple);
-	if (is_apple) { 
+	var is_iphone = (agent.indexOf('iphone')!=-1);
+	var is_ipad = (agent.indexOf('ipad')!=-1);
+	if (is_iphone || is_ipad) { 
+		//If browser is either on iPhone or iPad, don't show image upload
 		$('#file_field').hide();
 	}	
 	function update_fields(quick_tag) {
