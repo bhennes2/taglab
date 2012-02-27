@@ -205,10 +205,11 @@
 							</div>
 			        	</ul>
 					<% end %>
-					
-					<ul class="pageitem" style="padding: 8px 8px 4px 8px;">
-						<a href="<%= @tag.image.url %>"><%= image_tag @tag.image.url %></a>
-			        </ul>
+					<% if !@tag.image_file_size.nil? %>
+						<ul class="pageitem" style="padding: 8px 8px 4px 8px;">
+							<a href="<%= @tag.image.url %>"><%= image_tag @tag.image.url %></a>
+			        	</ul>
+					<% end %>
 						
 					<div id="user_id">
     				    <%= f.text_field :user_id %>
