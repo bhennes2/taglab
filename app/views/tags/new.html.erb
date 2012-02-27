@@ -76,10 +76,10 @@
 	function initialize(){
 		return true;
 	}
-	
-						
+					
 	var agent=navigator.userAgent.toLowerCase();
 	var is_iphone = (agent.indexOf('iphone')!=-1);
+	document.write(is_iphone);
 	if (is_iphone) { 
 		$('#file_field').attr('id', 'user_id');
 	}
