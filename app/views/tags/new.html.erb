@@ -21,7 +21,9 @@
 						<li class="bigfield">
 							<%= f.text_field :title, :autocomplete=> :off, :placeholder => "Title" %>
 						</li>
+						<div id="counter"></div>
 					</ul>
+					
 					<ul class="pageitem">
 			            <li class="textbox">
 							<%= f.text_area :notes, :placeholder => "Notes", :rows => "4" %>
@@ -72,17 +74,37 @@
 -->
 
 <script>  
+
+	$(document).ready(function()
+	{
+		var max_length = 30;
+		// get current number of characters
+		$('#counter').html(max_length - $('#tag_title').val().length);
+
+		$('#tag_title').keyup(function()
+		{
+			// get new length of characters
+			if ($(this).val().length >= max_length)
+			{
+				$('#counter').html('You have reached the maximum limit of ' + max_length);
+				$(this).val($(this).val().substr(0, max_length));
+			}
+			else 
+			{
+				$('#counter').html(max_length - $(this).val().length);
+			}
+		});
+	});
 	
 	function initialize(){
 		return true;
 	}
 					
 	var agent=navigator.userAgent.toLowerCase();
-	var is_iphone = (agent.indexOf('iphone')!=-1);
-	if (is_iphone) { 
+	var is_apple = (agent.indexOf('iphone' || 'ipad')!=-1);
+	if (is_apple) { 
 		$('#file_field').hide();
-	}
-	
+	}	
 	function update_fields(quick_tag) {
 		document.forms["new_tag"]["tag_title"].value = quick_tag;
 		document.forms["new_tag"].submit();

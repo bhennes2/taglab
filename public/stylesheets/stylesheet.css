@@ -570,3 +570,10 @@ select {
 .ui-btn-down-r a.ui-link-inherit { color: #fff; }
 
 .ui-btn-up-r, .ui-btn-hover-r, .ui-btn-down-r { font-family: Helvetica, Arial, sans-serif; }
+
+#counter {
+	float: right;
+	font-size: 14px;
+	padding: 5px;
+	color: #999999;
+}
