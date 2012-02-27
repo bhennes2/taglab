@@ -32,6 +32,7 @@ GEM
     addressable (2.2.6)
     arel (2.0.10)
     builder (2.1.2)
+    cocaine (0.2.1)
     erubis (2.6.6)
       abstract (>= 1.0.0)
     faraday (0.7.6)
@@ -66,6 +67,11 @@ GEM
       omniauth (~> 1.0)
     omniauth-twitter (0.0.7)
       omniauth-oauth (~> 1.0)
+    paperclip (2.7.0)
+      activerecord (>= 2.3.0)
+      activesupport (>= 2.3.2)
+      cocaine (>= 0.0.2)
+      mime-types
     pg (0.11.0-x86-mingw32)
     polyglot (0.3.3)
     rack (1.2.5)
@@ -107,6 +113,7 @@ PLATFORMS
 DEPENDENCIES
   omniauth-facebook
   omniauth-twitter
+  paperclip
   pg
   rails (= 3.0.11)
   sinatra (= 1.0)

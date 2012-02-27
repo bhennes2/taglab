@@ -20,6 +20,7 @@ gem 'sqlite3', '1.3.3'
 # Bundle the extra gems:
 # gem 'bj'
 # gem 'nokogiri'
+gem 'paperclip'
 
 group :production, :staging do
   gem "pg"

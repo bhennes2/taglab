@@ -36,6 +36,9 @@
 													
 												<% end %>									
 												<!-- Indicate whether or not an image is with the tag-->
+												<% if !tag.image_file_size.nil? %>
+													<span><img class="location-arrow" src="/images/photo.png" /></span>
+												<% end %>	
 												<!--<% form_tag tag, :method => :delete, :class => "delete_tag" do %>
 													<% image_submit_tag "../images/close_icon.gif", :onclick => "return confirm('Are you sure you want to delete?')" %>
 												<% end %>-->

@@ -205,6 +205,10 @@
 							</div>
 			        	</ul>
 					<% end %>
+					
+					<ul class="pageitem" style="padding: 8px 8px 4px 8px;">
+						<a href="<%= @tag.image.url %>"><%= image_tag @tag.image.url %></a>
+			        </ul>
 						
 					<div id="user_id">
     				    <%= f.text_field :user_id %>
@@ -240,7 +244,9 @@
 			<% end %>
 			
 			<%= button_to 'Destroy', @tag, :onclick => "return confirm('Are you sure you want to delete?')", :method => :delete %>
-									
+			
+			
+			
         </div><!--close interior-->
     </div><!--close content-->
     <div id="footer">
