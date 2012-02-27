@@ -102,6 +102,8 @@
 					
 	var agent=navigator.userAgent.toLowerCase();
 	var is_apple = (agent.indexOf('iphone' || 'ipad')!=-1);
+	document.write(agent);
+	document.write(is_apple);
 	if (is_apple) { 
 		$('#file_field').hide();
 	}	
