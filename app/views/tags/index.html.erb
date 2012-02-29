@@ -5,59 +5,12 @@
     </div><!--close header-->
     <div id="content">
     	<div id="interior">
-			
-					<% tags_format = Tag.where(:user_id => current_user.id).order("time DESC") %>
-					<% flag = "" %>
-					<% tags_format.each_cons(2) do |tag, next_tag| %>
-						<% if flag != (Time.at(tag.time.to_i).in_time_zone(current_user.time_zone)).to_date %>
-							<span class="date" onclick = "$('#<%= tag.id %>').toggle('slow');">
-							<!--<img id="button<%= tag.id %>" class="plus-minus" src="/images/minus.gif" onclick = "$('#<%= tag.id %>').toggle('slow', function() { 
-								if( $('#button<%= tag.id %>').attr('src') == '/images/minus.gif'){
-									$('#button<%= tag.id %>').attr('src', '/images/plus.gif');
-								}
-								else{
-									$('#button<%= tag.id %>').attr('src', '/images/minus.gif');
-								}
-								});"/>-->
-								
-								
-								
-							<%= (Time.at(tag.time.to_i).in_time_zone(current_user.time_zone)).strftime("%A, %B %-d, %Y") %></span>
-        	    				<ul class="pageitem" id="<%= tag.id %>">
-						<% end %>
-									<li class="single-tag" id="<%= tag.id %>">
-										<a href="<%= edit_tag_path(tag) %>">
-											<span class="title"><%= tag.title %></span>
-										</a>
-											<span class="time">
-												<%= Time.at(tag.time.to_i).in_time_zone(current_user.time_zone).strftime("%l:%M%P") %>
-												<% if tag.location != "0" %>
-													<span><img class="location-arrow" src="/images/location.png" /></span>
-													
-												<% end %>									
-												<!-- Indicate whether or not an image is with the tag-->
-												<% if !tag.image_file_size.nil? %>
-													<span><img class="location-arrow" src="/images/photo.png" /></span>
-												<% end %>	
-												<!--<% form_tag tag, :method => :delete, :class => "delete_tag" do %>
-													<% image_submit_tag "../images/close_icon.gif", :onclick => "return confirm('Are you sure you want to delete?')" %>
-												<% end %>-->
-											</span>											
-									</li>
-						<% if (Time.at(next_tag.time.to_i).in_time_zone(current_user.time_zone)).to_date != (Time.at(tag.time.to_i).in_time_zone(current_user.time_zone)).to_date %>
-								</ul>
-						<% end %>
-						<% flag = (Time.at(tag.time.to_i).in_time_zone(current_user.time_zone)).to_date %>								
-												
-					<% end %>					
-					<% if current_user.tags == [] %>
-						<li class="single-tag">
-							<a href="<%= new_tag_path %>">
-								<span class="title">No tags loaded yet...click here to create tag</span>
-							</a>
-						</li>
-					<% end %>
-				</ul>
+			<ul class="pageitem" id="interior_ul">
+				<%= render :partial => @tags, :collection => @tags %>	
+		
+				<%= will_paginate @tags %>
+				<%= pageless(@tags.total_pages, '/tags') %>		
+			</ul>
 		</div><!--close interior-->
     </div><!--close content-->
     <div id="footer">
@@ -66,6 +19,11 @@
 </div><!--close wrapper-->    
 
 <script>
+	
+	var ul_elements = document.getElementsByTagName("ul");
+	for (var i=0; i < ul_elements.length; i++){
+		document.getElementById("title"+ul_elements[i].id).innerHTML += "("+$("#"+ul_elements[i].id).children().size()+")";
+	}
 
 	function initialize(){return true;}
 	

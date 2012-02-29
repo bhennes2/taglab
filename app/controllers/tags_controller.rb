@@ -5,12 +5,19 @@ class TagsController < ApplicationController
   # GET /tags
   # GET /tags.xml
   def index
-    @tags = Tag.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @tags }
-    end
+    #@tags = Tag.all
+	@tags = Tag.paginate :per_page => 10, :page => params[:page],
+										  :conditions => { :user_id => current_user.id },
+										  :order => 'tags.time DESC'
+	
+	if request.xhr?
+		sleep(2)
+		render :partial => @tags
+	end
+    #respond_to do |format|
+      #format.html # index.html.erb
+      #format.xml  { render :xml => @tags }
+    #end
   end
 
   # GET /tags/1
@@ -126,6 +133,20 @@ class TagsController < ApplicationController
     #end
   end
   
+  def tagsday
+  	@tags = Tag.paginate :per_page => 10, :page => params[:page],
+						 :conditions => { :date => Time.at(params[:time].to_i).to_date },
+						 :order => 'tags.time DESC'	
+
+	if request.xhr?
+		sleep(0)
+	end
+	respond_to do |format|
+		format.html 
+		format.js 
+	end
+	
+  end  
     
   protected
   

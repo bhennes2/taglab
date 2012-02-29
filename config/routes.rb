@@ -67,6 +67,9 @@ Quicktag::Application.routes.draw do
   # Provide route for submitting new tag via quick tag
   match "/new_quicktag" => "tags#quicktag"
   
+  # Provide route for viewing tags for specific day
+  match "/tags_day" => "tags#tagsday"
+  
   # Provide route for viewing help page
   match "/help" => "help#index"
   

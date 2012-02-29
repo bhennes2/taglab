@@ -29,12 +29,12 @@ ActiveRecord::Schema.define(:version => 20120207170209) do
     t.string   "location"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "date"
     t.integer  "user_id"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.date     "date"
   end
 
   create_table "users", :force => true do |t|

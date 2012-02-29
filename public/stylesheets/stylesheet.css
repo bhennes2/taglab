@@ -227,7 +227,7 @@ h2 {color: #ff6600;}
 #footer p {padding-top: 12px;} 
 
 /* INTERIOR */
-#interior {padding: 0 10px;}
+#interior {padding: 0 10px; overflow: auto; }
 
 /* QUICK TAGS */
 /* VIEW TAGS */
@@ -576,4 +576,8 @@ select {
 	font-size: 14px;
 	padding: 5px;
 	color: #999999;
+}
+
+.day_tag {
+	color: black;
 }

@@ -1,0 +1,23 @@
+<li class="single-tag" id="<%= tag.id %>">
+	<a href="<%= edit_tag_path(tag) %>">
+		<span class="title"><%= tag.title %></span>
+	</a>
+		<span class="time">
+			Tagged on <a class="day_tag" onclick="$('#interior').load('<%= root_url %>tags_day?time=<%= tag.time %>')" ><%= Time.at(tag.time.to_i).in_time_zone(current_user.time_zone).strftime(" %-m/%-d/%y") %></a>
+			<%= Time.at(tag.time.to_i).in_time_zone(current_user.time_zone).strftime(" @%l:%M %P") %>
+			
+			<!-- if click link, load tags for that specific day....load partial with filtered results by that day -->
+			
+			<% if tag.location != "0" %>
+				<span><img class="location-arrow" src="/images/location.png" /></span>
+			<% end %>									
+			<!-- Indicate whether or not an image is with the tag-->
+			<% if !tag.image_file_size.nil? %>
+				<span><img class="location-arrow" src="/images/photo.png" /></span>
+			<% end %>	
+			<!--<% form_tag tag, :method => :delete, :class => "delete_tag" do %>
+				<% image_submit_tag "../images/close_icon.gif", :onclick => "return confirm('Are you sure you want to delete?')" %>
+			<% end %>-->
+		</span>											
+</li>
+

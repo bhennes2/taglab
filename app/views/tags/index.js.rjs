@@ -1,0 +1,2 @@
+page.insert_html :bottom, :interior, :partial => "tag"
+page.call 'checkScroll' if @tags.total_pages > @tags.current_page

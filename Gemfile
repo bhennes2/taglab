@@ -21,6 +21,7 @@ gem 'sqlite3', '1.3.3'
 # gem 'bj'
 # gem 'nokogiri'
 gem 'paperclip'
+gem 'will_paginate'
 
 group :production, :staging do
   gem "pg"
