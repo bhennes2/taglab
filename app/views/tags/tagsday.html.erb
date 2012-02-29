@@ -37,11 +37,9 @@
 							</li>
 							<% flag = (Time.at(tag.time.to_i).in_time_zone(current_user.time_zone)).to_date %>								
 			<% end %>					
-					<% if current_user.tags == [] %>
+					<% if @tags == [] %>
 						<li class="single-tag">
-							<a href="<%= new_tag_path %>">
-								<span class="title">No tags loaded yet...click here to create tag</span>
-							</a>
+							<span class="title">No tags loaded for this day</span>							
 						</li>
 					<% end %>
 				

@@ -37,6 +37,9 @@ ActiveRecord::Schema.define(:version => 20120207170209) do
     t.date     "date"
   end
 
+  add_index "tags", ["date"], :name => "index_tags_on_date"
+  add_index "tags", ["title"], :name => "index_tags_on_title"
+
   create_table "users", :force => true do |t|
     t.string   "username"
     t.string   "email"

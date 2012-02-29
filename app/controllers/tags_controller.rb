@@ -109,6 +109,7 @@ class TagsController < ApplicationController
 	
 	# Set the time equal to the current time
 	@tag.time = Time.now.utc.to_i
+	@tag.date = Time.now.utc.to_date
 	
 	# Set the location
 	if quicktag.location == 0
@@ -135,7 +136,8 @@ class TagsController < ApplicationController
   
   def tagsday
   	@tags = Tag.paginate :per_page => 10, :page => params[:page],
-						 :conditions => { :date => Time.at(params[:time].to_i).to_date },
+						 :conditions => { :date => Time.at(params[:time].to_i).to_date,
+										  :user_id => current_user.id },
 						 :order => 'tags.time DESC'	
 
 	if request.xhr?
