@@ -82,7 +82,9 @@
 						
             			<li class="checkbox" style="position:relative">
 							<span class="name" style="position:absolute;">Time</span>
-								<input type="time" value="<%= Time.at(@tag.time.to_i).in_time_zone(current_user.time_zone).to_time %>"></input>
+								<% value = Time.at(@tag.time.to_i).in_time_zone(current_user.time_zone).to_time %>
+								<% value = value.to_s.split(" ") %>
+								<input type="time" id="time_of_day" value="<%= value[1] %>"></input>
 						</li><!--
 						<select id="date_hour">
 						<option value="00">00</option>
@@ -203,9 +205,9 @@
 			        	</ul>
 					<% end %>
 						
-					<div id="user_id">
-    				    <%= f.text_field :user_id %>
-					</div>
+					
+    				    
+					
 					<ul class="pageitem">
 						<li class="button">
 							<!--<input name="Submit" type="submit" value="SUBMIT" class="orange" />-->
@@ -213,24 +215,13 @@
 
 						</li>
 					</ul>
-	
-					
-					
-					
-					
-					
-					
-					
 
 					<% time_of_tag = Time.at(@tag.time.to_i).in_time_zone(current_user.time_zone).to_time %>
 					<% select_time time_of_tag, :ampm => true %>
 												
-					<div id="user_id">
-						<%= f.text_field :time %>
-					</div>
-					
-					
-					
+					<%= f.hidden_field :user_id %>
+					<%= f.hidden_field :time %>
+
 					</fieldset>
 					
 
@@ -256,7 +247,13 @@
 			document.getElementById("date_minute").value = <%= Time.at(@tag.time.to_i).in_time_zone(current_user.time_zone).min %>;
 		})
 
-
+		$("#tag_submit").click(function(){
+			var date = $("#date").val().split("-");
+			var time = $("#time_of_day").val().split(":");
+			var dt = Date.UTC(date[0], date[1], date[2], time[0], time[1], time[2]);
+			$("#tag_time").val(dt/1000+21600);
+			return true;
+		});
 
 		$("select").change(function () {
 		  
