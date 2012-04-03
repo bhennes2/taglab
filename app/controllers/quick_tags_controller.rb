@@ -3,7 +3,7 @@ class QuickTagsController < ApplicationController
   # GET /quick_tags.xml
   def index
   	@title = "Quick tags"
-    @quick_tags = QuickTag.where(:user_id => current_user.id).group("category")
+    @quick_tags = QuickTag.where(:user_id => current_user.id).reorder("category DESC").group("category")
 
     respond_to do |format|
       format.html # index.html.erb
