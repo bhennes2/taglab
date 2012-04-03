@@ -2,7 +2,8 @@ class QuickTagsController < ApplicationController
   # GET /quick_tags
   # GET /quick_tags.xml
   def index
-    @quick_tags = QuickTag.all
+  	@title = "Quick tags"
+    @quick_tags = QuickTag.where(:user_id => current_user.id).group("category")
 
     respond_to do |format|
       format.html # index.html.erb

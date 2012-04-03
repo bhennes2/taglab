@@ -5,7 +5,7 @@ class TagsController < ApplicationController
   # GET /tags
   # GET /tags.xml
   def index
-    #@tags = Tag.all
+    @title = "View tags"
 	@tags = Tag.paginate :per_page => 10, :page => params[:page],
 										  :conditions => { :user_id => current_user.id },
 										  :order => 'tags.time DESC'
@@ -34,6 +34,7 @@ class TagsController < ApplicationController
   # GET /tags/new
   # GET /tags/new.xml
   def new
+  	@title = "Add Tag"
     @tag = Tag.new
 
 	respond_to do |format|
@@ -44,6 +45,7 @@ class TagsController < ApplicationController
 
   # GET /tags/1/edit
   def edit
+  	@title = "Edit Tag"
     @tag = Tag.find(params[:id])
   end
 
@@ -114,24 +116,16 @@ class TagsController < ApplicationController
 	# Set the location
 	if quicktag.location == 0
 		@tag.location = 0
-	end
-	if quicktag.location == 1
+	elsif quicktag.location == 1
 		@tag.location = params[:location]
 	end 
 	
 	@tag.save
-				
-    #respond_to do |format|
-    	#if tag.save
-			#format.html { redirect_to(quick_tags_path)}
-			#format.html { redirect_to root_url } 
-        # format.html { redirect_to(@tag, :notice => 'Tag was successfully created.') }
-       	# format.xml  { render :xml => @tag, :status => :created, :location => @tag }
-      	#else
-      	#	format.html { render :action => "new" }
-        #format.xml  { render :xml => @tag.errors, :status => :unprocessable_entity }
-    	#end
-    #end
+
+	@tags = Tag.paginate :per_page => 10, :page => params[:page],
+										  :conditions => { :user_id => params[:user_id] },
+										  :order => 'tags.time DESC'
+		
   end
   
   def tagsday

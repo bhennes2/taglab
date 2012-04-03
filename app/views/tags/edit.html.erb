@@ -1,8 +1,3 @@
-<div id="wrapper">
-	<div id="header">
-		<h1>Edit Tag</h1>
-        <a href="<%= root_url %>" class="back"><img src="/images/back.png" alt="Back" /></a>
-    </div><!--close header-->
     <div id="content">
     	<div id="interior">
         	<%= form_for(@tag, :html => {:name=>"edit_tag"} ) do |f| %>
@@ -19,18 +14,17 @@
 				<fieldset>
 					<ul class="pageitem">
 						<li class="bigfield">
-							<!--<input placeholder="Title" type="text" value="<%= @tag.title %>" />-->
 							<%= f.text_field :title, :placeholder =>"Title" %>
 						</li>
 					</ul>
 					<ul class="pageitem">
             			<li class="checkbox" style="position:relative">
 							<span class="name" style="position:absolute;">Date</span>
-								<!--<input type="date" id="date" value="<%= Time.at(@tag.time.to_i).in_time_zone(current_user.time_zone).to_date %>"></input>-->
+								<input type="date" id="date" value="<%= Time.at(@tag.time.to_i).in_time_zone(current_user.time_zone).to_date %>"></input>
 						</li>
 								<% date_of_tag = Time.at(@tag.time.to_i).in_time_zone(current_user.time_zone).to_date %>
 					<% select_date date_of_tag, :order => [:month, :day, :year] %>
-					
+					<!--
 					<select id="date_month">
   						<option value="1">Jan</option>
 						<option value="2">Feb</option>
@@ -84,11 +78,12 @@
 						<option value="<%= date_year %>"><%= date_year %></option>
 						<option value="<%= date_year + 1 %>"><%= date_year + 1 %></option>
 					</select>
+					-->
 						
             			<li class="checkbox" style="position:relative">
 							<span class="name" style="position:absolute;">Time</span>
-								<!--<input type="time" value="<%= Time.at(@tag.time.to_i).in_time_zone(current_user.time_zone).to_time %>"></input>-->
-						</li>
+								<input type="time" value="<%= Time.at(@tag.time.to_i).in_time_zone(current_user.time_zone).to_time %>"></input>
+						</li><!--
 						<select id="date_hour">
 						<option value="00">00</option>
 						<option value="01">01</option>
@@ -176,7 +171,7 @@
 						<option value="57">57</option>
 						<option value="58">58</option>
 						<option value="59">59</option>
-					</select>
+					</select>-->
 		   			</ul>
 					<ul class="pageitem">
             			<li class="textbox">
@@ -199,10 +194,7 @@
 					<% if @tag.location != "0" %>
 						<ul class="pageitem" style="padding: 8px 0 4px 8px;" onLoad = "initialize();">
         					<!-- Insert map w/ Google API -->
-							<!--<iframe width="264" height="264" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=b+rose+salon&amp;aq=&amp;sll=41.936402,-87.663056&amp;sspn=0.015036,0.032101&amp;ie=UTF8&amp;hq=b+rose+salon&amp;hnear=&amp;t=m&amp;cid=10910527162893858754&amp;ll=41.943404,-87.664461&amp;spn=0.016726,0.0424&amp;z=14&amp;iwloc=&amp;output=embed"></iframe> -->
-							<div id="map_canvas" style=" height: 264px; width: 264px;">
-								
-							</div>
+							<div id="map_canvas" style=" height: 264px; width: 264px;"></div>
 			        	</ul>
 					<% end %>
 					<% if !@tag.image_file_size.nil? %>
@@ -243,17 +235,17 @@
 					
 
 			<% end %>
-			
-			<%= button_to 'Destroy', @tag, :onclick => "return confirm('Are you sure you want to delete?')", :method => :delete %>
-			
+			<ul class="pageitem">
+						<li class="button">
+							<%= button_to 'DESTROY', @tag, :onclick => "return confirm('Are you sure you want to delete?')", :method => :delete, :class => "orange" %>
+						</li>
+			</ul>
+	
 			
 			
         </div><!--close interior-->
     </div><!--close content-->
-    <div id="footer">
-    	<p>&copy; copyright 2012 Tag Lab</p>
-    </div><!--close footer-->
-</div><!--close wrapper-->  
+  
 <script>
 
 		$(document).ready(function() {

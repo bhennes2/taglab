@@ -1,0 +1,2 @@
+$("#header").html('<h1>View Tags<span>&nbsp;&nbsp;<a href="/signout" style="text-decoration: none; color: #F60;">&#9660;</a></span></h1><a href="<%= root_url %>" class="back"><img src="/images/back.png" alt="Back" /></a>');
+$("#content").html('<%= escape_javascript(render :partial => "tags_view") %>');

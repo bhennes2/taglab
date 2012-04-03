@@ -1,0 +1,13 @@
+<div id="header">
+	<% if params[:controller] == "home" %>
+		<img src="/images/taglab-logo.png" alt="TagLab" class="logo" />
+		<span>&nbsp;&nbsp;<a href="/signout" style="text-decoration: none; color: #F60;">&#9660;</a></span>
+	<% else %>
+		<h1>
+			<%= @title %>
+			<span>&nbsp;&nbsp;<a href="/signout" style="text-decoration: none; color: #F60;">&#9660;</a></span>	
+		</h1>
+		<a href="<%= root_url %>" class="back"><img src="/images/back.png" alt="Back" /></a>
+	<% end %>	
+	
+</div><!--close header-->

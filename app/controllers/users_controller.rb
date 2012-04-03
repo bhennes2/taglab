@@ -37,6 +37,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+  	@title = "Profile"
     @user = User.find(params[:id])
   end
 

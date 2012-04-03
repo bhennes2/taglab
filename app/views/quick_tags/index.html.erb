@@ -1,18 +1,11 @@
-<div id="wrapper">
-	<div id="header">
-		<h1>Quick Tags</h1>
-        <a href="<%= root_url %>" class="back"><img src="/images/back.png" alt="Back" /></a>
-    </div><!--close header-->
-    <div id="content">
+	<div id="content">
     	<div id="interior">
-        	<div style="text-align: center; padding-bottom: 10px;">
-        	<span style="font-family: Helvetica, sans-serif; font-size: 18px;">
-				<a href="<%= new_quick_tag_path %>" style="color: #ff6600; text-decoration: none;">Add Quick Tag</a> 
-				<!--<a href="#" style="color: #ff6600; text-decoration: none;">Click to Edit then select tag to edit</a></span>-->
-						        
-				<span class="name">Edit</span>
-				<input name="location" type="checkbox" id="edit_quick_tag" unchecked="true" />
-					
+			<div style="text-align: center; padding-bottom: 10px;">
+        		<span style="font-family: Helvetica, sans-serif; font-size: 18px;">
+					<a href="<%= new_quick_tag_path %>" style="color: #ff6600; text-decoration: none;">+ Add</a> 
+					<span class="name">Edit
+						<input name="location" type="checkbox" id="edit_quick_tag" unchecked="true" />
+					</span>
             </div>
 			<% if current_user.quick_tags == [] %>
 				<ul class="pageitem">
@@ -20,32 +13,20 @@
 						<span class="title">No quick tags loaded</span>
 					</li>
 				</ul>
-			<% end %>
-			<% if true %>
-				<% quick_tags_format = QuickTag.where(:user_id => current_user.id).group{|i| i.category.downcase}.order("category") %>
+			<% else %>
 				<% flag = "" %>
-				<% quick_tags_format.each_cons(2) do |quick_tag, next_quick_tag| %>
+				<% @quick_tags.each_cons(2) do |quick_tag, next_quick_tag| %>
 					<% if flag != quick_tag.category.downcase %>
-						<span class="quickgroup" onclick = "$('#<%= quick_tag.category %>').toggle('slow');">
-						<!--<img id="button<%= quick_tag.category %>" class="plus-minus" src="/images/minus.gif" onclick = "$('#<%= quick_tag.category %>').toggle('slow', function() { 
-								if( $('#button<%= quick_tag.category %>').attr('src') == '/images/minus.gif'){
-									$('#button<%= quick_tag.category %>').attr('src', '/images/plus.gif');
-								}
-								else{
-									$('#button<%= quick_tag.category %>').attr('src', '/images/minus.gif');
-								}
-								});"/>-->
-						<%= quick_tag.category %></span>
+						<span class="quickgroup" onclick = "$('#<%= quick_tag.category %>').toggle('slow');"><%= quick_tag.category %></span>
 		        	    <ul class="pageitem" id="<%= quick_tag.category %>">
 					<% end %>
 		        	        <li class="quick-tag" id="<%= quick_tag.id %>" >
 								<% if quick_tag.location == 1 %>
-									<span class="title" onclick="quick_tag_control(this)" id="<%= quick_tag.id %>"><%= quick_tag.title %>
+									<span class="title quicktag" id="<%= quick_tag.id %>"><%= quick_tag.title %>
 										<img class="location-arrow" src="/images/location.png" />
 									</span>
-								<% end %>
-								<% if quick_tag.location == 0 %>
-									<span class="title" onclick="quick_tag_control(this)" id="<%= quick_tag.id %>"><%= quick_tag.title %></span>
+								<% elsif quick_tag.location == 0 %>
+									<span class="title quicktag" id="<%= quick_tag.id %>"><%= quick_tag.title %></span>
 								<% end %>
 							</li>
 					<% if next_quick_tag.category.downcase != quick_tag.category.downcase %>
@@ -54,15 +35,10 @@
 					<% flag = quick_tag.category.downcase %>
 				<% end %>
 			<% end %>
-			<div id="user_id">
-				<input type="text" id="tag_location" />
-			</div>
+			<input type="hidden" id="tag_location" />
+			
 		</div><!--close interior-->
     </div><!--close content-->
-    <div id="footer">
-    	<p>&copy; copyright 2012 Tag Lab</p>
-    </div><!--close footer-->
-</div><!--close wrapper-->   
 
 <script>
 
@@ -70,40 +46,31 @@
 		return true;
 	}
 	
-	$(".quick-tag").swiperight(function(){
-		var $li = $(this);
-		var $deleteBtn = $('<a>Edit</a>').attr({
-							class: 'aDeleteBtn ui-btn-up-r',
-							href: '<%= root_url %>quick_tags/'+ $li.attr('id') +'/edit',
-							method: 'get'
-		});
-		$li.prepend($deleteBtn);
-		
-	});
-	
-	$("#header").swipeleft(function(){
-		window.location.replace("<%= root_url %>");		
-	});
-
-	function quick_tag_control(element){
+	$(".quicktag").click(function(){
 		if (document.getElementById("edit_quick_tag").checked)
 		{
 			// Load edit page for specific quick tag	
-			window.location.replace("<%= root_url %>quick_tags/"+$(element).attr("id")+"/edit");
+			window.location.replace("<%= root_url %>quick_tags/"+$(this).attr("id")+"/edit");
 		}
-		if (true)
+		else
 		{	
-			var position = document.getElementById("tag_location").value;
-			$.post("/new_quicktag", { user_id: <%= current_user.id %>, id: $(element).attr("id"), location: position } );
-			//window.location.replace("<%= root_url %>tags/");
+			var position = $("#tag_location").val();
+			$.ajax({
+				beforeSend: function(xhr) {
+    				xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+  				},
+				url: "/new_quicktag",
+				data: { user_id: <%= current_user.id %>, id: $(this).attr("id"), location: position },
+				dataType: 'script',
+				type: 'POST'
+			});
+			return true;
 		}
-	}
+	});
 	
 	function showMap(position) {
       		// Show a map centered at (position.coords.latitude, position.coords.longitude).
 			document.getElementById("tag_location").value = position.coords.latitude+","+position.coords.longitude;
-			var location = position.coords.latitude+","+position.coords.longitude;
-			 
 	}
 	
 	// One-shot position request.

@@ -1,73 +1,9 @@
-<div id="wrapper">
-	<div id="header">
-		<h1>View Tags</h1>
-        <a href="<%= root_url %>" class="back"><img src="/images/back.png" alt="Back" /></a>
-    </div><!--close header-->
-    <div id="content">
-    	<div id="interior">
-			<ul class="pageitem" id="interior_ul">
-				<%= render :partial => @tags, :collection => @tags %>	
-		
-				<%= will_paginate @tags %>
-				<%= pageless(@tags.total_pages, '/tags') %>		
-			</ul>
-		</div><!--close interior-->
-    </div><!--close content-->
-    <div id="footer">
-    	<p>&copy; copyright 2012 Tag Lab</p>
-    </div><!--close footer-->
-</div><!--close wrapper-->    
+<div id="content">
+	<%= render :partial => 'tags_view' %>
+</div><!-- content -->
+   
 
-<script>
-	
-	var ul_elements = document.getElementsByTagName("ul");
-	for (var i=0; i < ul_elements.length; i++){
-		document.getElementById("title"+ul_elements[i].id).innerHTML += "("+$("#"+ul_elements[i].id).children().size()+")";
-	}
 
-	function initialize(){return true;}
-	
-	/*$(".single-tag").swiperight(function(){
-		var $li = $(this);
-		var $deleteBtn = $('<a>Delete</a>').attr({
-							class: 'aDeleteBtn ui-btn-up-r',
-							href: '/tags/' + $li.attr('id') + '/',
-							onclick: 'return confirm("Are you sure you want to delete?")',
-							method: 'delete'
-		});
-		$li.prepend($deleteBtn);
-		
-	});*/
-	
-	$("#header").swipeleft(function(){
-		$.mobile.changePage("<%= root_url %>");		
-	});
-	
-	/*
-	$(function(){
-		$('div').live('pageshow',function(event,ui){
-				if ( event.target.id.indexOf('swipedelete') >= 0) {
-					// remove any existing swipe areas
-					$('.aDeleteBtn').remove();
-					// add swipe event to the list item
-					$('ul li').bind('swiperight', function(e){
-						// reference the just swiped list item
-						var $li = $(this);
-						// remove all buttons first
-						$('.aDeleteBtn').remove();
-						// create buttons and div container
-					
-						var $deleteBtn = $('<a>Delete</a>').attr({
-							'class': 'aDeleteBtn ui-btn-up-r',
-							'href': 'some/link/page.html?nID=' + $li.data('nid')
-						});
-						// insert swipe div into list item
-						$li.prepend($deleteBtn);
-					});
-			}
-			})});*/
-
-</script>
 				
 		
 		

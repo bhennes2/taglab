@@ -18,16 +18,17 @@
 		
 		<!-- Scripts -->		
 		<!-- Required to load jquery before prototype.js -->
-		<script src="/javascripts/jquery-1.7.1.js"></script> 
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<!--<script src="/javascripts/jquery-1.7.1.js"></script>-->
 		<!-- Required to load Google Map -->
 		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDNTgdz8LHOUFC4eTssPHmMD02N_NnQ5Xk&sensor=false"></script>
 		
 		<!-- <script type="text/javascript" src="/js/functions.js"></script>-->
 		<!-- Include this js file to make destroy links function 
-		<script type="text/javascript" src="/javascripts/dragdrop.js"></script>-->
-		<%= javascript_include_tag :defaults %>
+		<!--<script type="text/javascript" src="/javascripts/dragdrop.js"></script>-->
+		<!-- <%= javascript_include_tag :defaults %>-->
 		<!-- <%= javascript_include_tag "application" %>	-->	
-		<script src="http://code.jquery.com/jquery-latest.js"></script>		
+		
 		<script src="/javascripts/jquery-ui-1.8.17.custom.min.js"></script>
 		
 		<!--		
@@ -62,15 +63,23 @@
 	
 	</head>
 	<body onload="initialize()" >
-		<!-- Only access this home page when not logged in -->
-			<% if !current_user %>
-				<%=  render :template => 'home/index.html.erb' %>
-			<% end %>
-		<!-- Only allow access to pages file if logged in -->
-			<% if current_user %>
-				<%= yield %>
-			<% end %>
-		
+		<div id="wrapper">
+			
+				
+			<!-- Only access this home page when not logged in -->
+				<% if !current_user %>
+					<%=  render :template => 'home/index.html.erb' %>
+				<% end %>
+			<!-- Only allow access to pages file if logged in -->
+				<% if current_user %>
+					<%= render 'layouts/header' %>
+					<% flash.each do |key, value| %>
+	  					<div id="alerts" class="alert alert-<%= key %>"><%= value %></div>
+					<% end %>
+					<%= yield %>
+					<%= render 'layouts/footer' %>
+				<% end %>
+		</div><!--close wrapper--> 
 	</body>
 </html>
 
