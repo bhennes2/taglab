@@ -17,36 +17,26 @@
 				<fieldset>
 					<ul class="pageitem">
 						<li class="bigfield">
-							<!--<input placeholder="Username" type="text" />-->
-						    <%= f.text_field :username, :placeholder => "Username" %>
+							<%= f.text_field :username, :placeholder => "Username" %>
 						</li>
 					</ul>        
 					<ul class="pageitem">
 						<li class="bigfield">
-							<!--<input placeholder="Name" type="text" />-->
 							<%= f.text_field :first_name, :placeholder => "Name" %>
 						</li>
 					</ul>
 					<ul class="pageitem">
         			    <li class="textbox">
-							<!--<textarea placeholder="Bio" name="TextArea" rows="4"></textarea>-->
 							<%= f.text_area :about, :placeholder => "Bio", :rows => 4 %>
 						</li>
 					</ul>        
 					<ul class="pageitem">
 						<li class="bigfield">
-							<!--<input placeholder="Email Address" type="text" />-->
 							<%= f.text_field :email , :placeholder => "Email Address" %>
 						</li>
 					</ul>
 					<ul class="pageitem">
-
 						<li class="select">
-							<!--<select name="sex">
-            					<option value="0">Sex</option>
-								<option value="1">Female</option>
-								<option value="2">Male</option>
-							</select>-->
 							<span class="arrow"></span> 
 							<%= f.select :sex, ["","Male","Female"] %>
 						</li>
@@ -54,14 +44,12 @@
         			<ul class="pageitem">
         				<li class="checkbox" style="position:relative">
 							<span class="name" style="position:absolute;">Birthday</span>
-								<!--<input type="date"></input>-->
+								<input type="date" id="user_age" name="user[age]" value="<%= current_user.age.to_date %>"></input>
 						</li>
-						<%= f.date_select :age, :start_year => (Time.now.year - 100), :use_short_month => true, :order => [:month, :day, :year] %>
 					</ul>
 										
 					<ul class="pageitem">
 						<li class="bigfield">
-							<!--<input placeholder="Zip Code" type="text" maxlength="5" />-->
 							<%= f.text_field :zip_code, :placeholder => "Zip Code" %>
 						</li>
 					</ul>            
@@ -71,20 +59,13 @@
 							<%= f.time_zone_select :time_zone %>
 						</li>
 					</ul>   
-					<div id="user_id">
-    					<%= f.text_field :uid %>
-  					</div>					
+   					<%= f.hidden_field :uid %>
 					<ul class="pageitem">      
 						<li class="button">
-							<!--<input name="Submit" type="submit" value="SUBMIT" class="orange" />-->
 							<%= f.submit :value => "UPDATE", :class => "orange" %>
 						</li>
 					</ul>
 			</fieldset>
 		<% end %>
-		
-		<% #Calculation to determine age %>
-
-		
         </div><!--close interior-->
     </div><!--close content-->
