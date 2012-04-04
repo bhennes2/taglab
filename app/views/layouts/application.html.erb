@@ -8,6 +8,7 @@
 		<link href="/stylesheets/stylesheet.css" rel="stylesheet" type="text/css">
 		<link href='http://fonts.googleapis.com/css?family=Jura:300,400,500,600' rel='stylesheet' type='text/css'>
 		<link href="/stylesheets/jquery-ui-1.8.17.custom.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" type="text/css" href="/stylesheets/jquery.jqplot.css" />
 		<!-- 
 		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css" />
 		-->
@@ -31,11 +32,16 @@
 		
 		<script src="/javascripts/jquery-ui-1.8.17.custom.min.js"></script>
 		
+		
+		
 		<!--		
 		<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
 		<script src="/javascripts/jquery-mobile.js"></script>-->
 		<%= javascript_include_tag "jquery.pageless" %>
+		
+		<!-- Include jquery plugin for graphs -->
+		<script src="/javascripts/jquery.jqplot.js"></script>
 		
 		<!-- Start iOS -->
 		<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -62,7 +68,7 @@
 		<meta name="description" />
 	
 	</head>
-	<body onload="initialize()" >
+	<body >
 		<div id="wrapper">
 			
 				

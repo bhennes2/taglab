@@ -1,0 +1,67 @@
+<div id="content">
+	<div id="interior">
+		<%= form_tag('/conduct', :method => 'GET') do %>
+  				<fieldset>
+					<ul class="pageitem">
+						<label>Data source</label>
+						<li class="bigfield">
+							<span class="arrow"></span>
+							<% if !params[:data].nil? %>
+								<%= select_tag "data_source", options_from_collection_for_select(@tags, "title", "title", params[:data]) %>
+							<% else %>
+								<%= select_tag "data_source", options_from_collection_for_select(@tags, "title", "title") %>
+							<% end %>
+						</li>
+					</ul>
+					<ul class="pageitem">
+						<label>Calculation</label>
+						<li class="bigfield">
+							<span class="arrow"></span>
+							<% if !params[:type].nil? %>
+								<%= select_tag "calculation_type", options_for_select(["Average","Frequency"], params[:type]) %>
+							<% else %>
+								<%= select_tag "calculation_type", options_for_select(["Average","Frequency"]) %>
+							<% end %>
+						</li>
+					</ul>
+					<ul id="frequency_type_holder" style="display: none;" class="pageitem">
+						<label>Frequency Type</label>
+						<li class="bigfield">
+							<span class="arrow"></span>
+							<% if !params[:type].nil? %>
+								<% if params[:type] == "Frequency" %>
+									<%= select_tag "frequency_type", options_for_select(["day","week","month","year"], params[:ftype]) %>
+								<% end %>
+							<% else %>
+									<%= select_tag "frequency_type", options_for_select(["day","week","month","year"]) %>							
+							<% end %>
+						</li>
+					</ul>
+					<ul class="pageitem">      
+						<li class="button">
+							<%= submit_tag "RUN IT!", :class => "orange" %>
+						</li>
+					</ul>
+				</fieldset>
+		<% end %>
+	</div><!--close interior-->
+</div><!-- content -->
+
+<script>
+	$(document).ready(function(){
+		if ($("#calculation_type").val() == "Frequency"){
+			$("#frequency_type_holder").show();
+		}
+	
+	});
+	$("#calculation_type").change(function(){
+		if ($(this).val() == "Frequency"){
+			$("#frequency_type_holder").show();
+			$("#frequency_type").focus();
+		}
+		else if ($(this).val() == "Average") {
+			$("#frequency_type_holder").hide();	
+		}
+	});
+
+</script>

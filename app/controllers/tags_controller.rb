@@ -31,6 +31,7 @@ class TagsController < ApplicationController
     end
   end
 
+  
   # GET /tags/new
   # GET /tags/new.xml
   def new
@@ -142,7 +143,21 @@ class TagsController < ApplicationController
 		format.js 
 	end
 	
+  end 
+
+	
+  def experiments
+  	@title = "Experiments"
+	
+	@tags = Tag.where(:user_id => current_user)
   end  
+  
+  def conduct
+  	@title = "Results"
+	
+	@calc = params[:calculation_type]
+	@data = Tag.where(:user_id => current_user, :title => params[:data_source]).select(:time).order("time ASC")
+  end
     
   protected
   

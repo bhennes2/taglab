@@ -1,0 +1,147 @@
+<div id="content">
+	<div id="interior">
+		<% if @calc == "Frequency" %>
+			Frequency (#/<%= params[:frequency_type] %>): <span id="frequency"></span>
+		<% elsif @calc == "Average" %>
+			<!-- Calculate average -->
+			<p id="average"></p>
+		<% end %>
+		<ul class="pageitem" style="padding: 8px 0 4px 8px;">
+        	<div id="chart" style=" height: 264px; width: 264px;">
+				<img src="/images/loading.gif" title="Loading..." />
+			</div>
+			
+		</ul>
+	
+		<%= link_to "Edit", "/experiments?data="+ params[:data_source] + "&type=" + @calc + "&ftype=" + params[:frequency_type] %> | <%= link_to "New Experiment", "/experiments" %>
+	
+	</div><!--close interior-->
+</div><!-- content -->
+
+<script>
+	$(document).ready(function(){
+		
+			var data = [
+					<% @data.each do |datapoint| %>
+						<% time = Time.at(datapoint.time.to_i).in_time_zone(current_user.time_zone) %>
+						[<%= datapoint.time.to_i %>, <%= (time.hour*3600) + (time.min*60) + (time.sec) %>]
+						<% if datapoint.time != @data.last.time %>,<% end %>					
+					<% end %>
+				];
+		<% if @calc == "Average" %>
+			average(data);
+			plot(data);
+		<% elsif @calc == "Frequency" %>
+			var freq_data = [[-1,0]];
+			
+			var freq = "<%= params[:frequency_type] %>";
+			var interval;
+			var next_interval;
+			var ctr = 0;
+			var push_val = [-1,0];
+
+			for(var i=0; i < data.length; i++){
+				var d = new Date(data[i][0]*1000);
+				var next_d = new Date(data[i++][0]*1000);
+
+				<% if params[:frequency_type] == "day" %>
+					interval = getDOY(d);
+					next_interval = getDOY(next_d);
+				<% elsif params[:frequency_type] == "week" %>
+					interval = getWeek(d);
+					next_interval = getWeek(next_d);
+				<% elsif params[:frequency_type] == "month" %>	
+					interval = (d.getMonth() + 1);
+					next_interval = next_d.getMonth();
+				<% elsif params[:frequency_type] == "year" %>
+					interval = d.getFullYear();
+					next_interval = next_d.getFullYear();
+					
+				<% end %>
+				if (ctr == 0){
+					if (freq_data[ctr][0] != interval){
+						freq_data[ctr][0] = interval;
+						freq_data[ctr][1] += 1;
+					}
+					else {
+						freq_data[ctr][1] += 1;
+					}
+					if( interval != next_interval){
+						ctr += 1;
+					}
+				}
+				else if ( ctr != 0 ){
+					if (push_val[0][0] != interval){
+						push_val[0][0] = interval;
+						push_val[0][1] += 1;
+					}
+					else {
+						push_val[0][1] += 1;
+					}
+					if( interval != next_interval){
+						freq_data.push(push_val);
+						push_val = [[-1,0]];
+					}
+				}				
+			}
+			var sum = 0;
+			for (var i= 0; i < freq_data.length; i++){
+				sum = sum + freq_data[i][1];		
+			}
+			var avg = Math.round(sum / freq_data.length);
+			$("#frequency").html(avg);
+			plot(freq_data);
+		<% end %>	
+	});
+		
+
+	
+	function plot(data){
+		$("#chart").html('');
+		
+			$.jqplot('chart', [data],
+				{
+					title: '<%= params[:data_source] %>',
+					axesDefaults: {
+						showTicks: true
+					}
+
+					
+				}
+			);
+	};
+	
+	function average(data){
+			var sum = 0;
+			for (var i= 0; i < data.length; i++){
+				sum = sum + data[i][1];		
+			}
+			var avg = Math.round(sum / data.length);
+			var hour = Math.floor(avg/3600);
+			if (hour > 12){
+				hour = hour - 12;
+				var time_of_day = "PM";
+			}
+			else{
+				var time_of_day = "AM";
+			}
+			var minute = Math.floor((avg%3600)/60);
+			if (minute < 10){
+				minute = "0" + minute;
+			}
+			var second = Math.floor((avg%3600)%60);
+			if (second < 10){
+				second = "0" + second;
+			}
+			$("#average").html('Average: '+ hour +':'+minute+':'+second+' '+time_of_day);
+	};
+	
+	function getDOY(d) {
+		var onejan = new Date(d.getFullYear(),0,1);
+		return Math.ceil((d - onejan) / 86400000);
+	}	
+	function getWeek(d) {
+		var onejan = new Date(d.getFullYear(),0,1);
+		return Math.ceil((((d - onejan) / 86400000) + onejan.getDay()+1)/7);
+	}
+</script>

@@ -78,6 +78,9 @@ Quicktag::Application.routes.draw do
   match "/admin/users" => "admin#users"
   match "/admin/tags" => "admin#tags"
   
+  # Provide route for experiment pages
+  match "/experiments" => "tags#experiments"
+  match "/conduct" => "tags#conduct"
   
   # Resource for autocomplete
   resources :tags do
