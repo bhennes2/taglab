@@ -20,11 +20,11 @@
 					<ul class="pageitem">
             			<li class="checkbox" style="position:relative">
 							<span class="name" style="position:absolute;">Date</span>
-								<input type="date" id="date" value="<%= Time.at(@tag.time.to_i).localtime.to_date %>"></input>
+								<input type="date" id="date" value="<%= Time.at(@tag.time.to_i).in_time_zone(current_user.time_zone).to_date %>"></input>
 						</li>
             			<li class="checkbox" style="position:relative">
 							<span class="name" style="position:absolute;">Time</span>
-								<% value = Time.at(@tag.time.to_i).localtime.to_time %>
+								<% value = Time.at(@tag.time.to_i).in_time_zone(current_user.time_zone).to_time %>
 								<% value = value.to_s.split(" ") %>
 								<input type="time" id="time_of_day" value="<%= value[1] %>"></input>
 						</li>
@@ -63,6 +63,8 @@
 							<%= f.submit :class => "orange", :value => "UPDATE" %>
 						</li>
 					</ul>
+					
+					<!-- Hidden text fields -->
 					<%= f.hidden_field :location %>
 					<input type="hidden" id="tag_location_holder" />
 												
@@ -87,7 +89,7 @@
 			var date = $("#date").val().toString().split("-");
 			var time = $("#time_of_day").val().toString().split(":");
 			var dt = Date.UTC(parseInt(date[0]), parseInt(date[1])-1, parseInt(date[2]), parseInt(time[0]), parseInt(time[1]), parseInt(time[2]));
-			var offset = new Date(dt);
+			var offset = new Date(at);
 			offset = offset.getTimezoneOffset()*60;
 			$("#tag_time").val(dt/1000+offset);
 						
