@@ -37,15 +37,18 @@
 					<ul class="pageitem">
             			<li class="checkbox"><span class="name">Location</span>
 							<% if @tag.location != "0" %>
-								<%= f.check_box :location, { :checked => true } %>
+								<input id="location_checkbox" type="checkbox" checked="checked" />
+								<!--<%= f.check_box :location, { :checked => true } %>-->
 						</li>
-							<% else %>						
-								<%= f.check_box :location, { :value => "hello" }  %>
+							<% else %>	
+								<input id="location_checkbox" type="checkbox" />							
+								<!--<%= f.check_box :location, { :value => "hello" }  %>-->
 							<% end %>
+							
 						</li>
 					</ul>
 					<% if @tag.location != "0" %>
-						<ul class="pageitem" style="padding: 8px 0 4px 8px;" onLoad = "initialize();">
+						<ul id="#map_holder" class="pageitem" style="padding: 8px 0 4px 8px;" onLoad = "initialize();">
         					<!-- Insert map w/ Google API -->
 							<div id="map_canvas" style=" height: 264px; width: 264px;"></div>
 			        	</ul>
@@ -57,11 +60,11 @@
 					<% end %>
 					<ul class="pageitem">
 						<li class="button">
-							<!--<input name="Submit" type="submit" value="SUBMIT" class="orange" />-->
 							<%= f.submit :class => "orange", :value => "UPDATE" %>
-
 						</li>
 					</ul>
+					<%= f.hidden_field :location %>
+					<input type="hidden" id="tag_location_holder" />
 												
 					<%= f.hidden_field :user_id %>
 					<%= f.hidden_field :time %>
@@ -79,15 +82,23 @@
     </div><!--close content-->
   
 <script>
-
 		$("#tag_submit").click(function(){
-			
+			//Get latest time
 			var date = $("#date").val().toString().split("-");
 			var time = $("#time_of_day").val().toString().split(":");
 			var dt = Date.UTC(parseInt(date[0]), parseInt(date[1])-1, parseInt(date[2]), parseInt(time[0]), parseInt(time[1]), parseInt(time[2]));
 			var offset = new Date(dt);
 			offset = offset.getTimezoneOffset()*60;
 			$("#tag_time").val(dt/1000+offset);
+						
+			//Get latest location
+			if ($("#location_checkbox").is(':checked') && "<%= @tag.location %>" == "0"){
+				//If location on and previous location not stored
+				$("#tag_location").val($("#tag_location_holder").val());
+			}
+			else if (!$("#location_checkbox").is(':checked') && "<%= @tag.location %>" != "0"){
+				$("#tag_location").val("0");
+			}			
 			return true;
 		});
 		
@@ -115,14 +126,10 @@
         	});
 			<% end %>
 		}
-		
+		navigator.geolocation.getCurrentPosition(showMap);
 		function showMap(position) {
       		// Show a map centered at (position.coords.latitude, position.coords.longitude).
-			document.edit_tag.tag_location.value = position.coords.latitude+","+position.coords.longitude;
+			$("#tag_location_holder").val(position.coords.latitude+","+position.coords.longitude);
 			
-	    }
-		// One-shot position request.
-    	navigator.geolocation.getCurrentPosition(showMap);
-		
-	
+		}
 </script>
