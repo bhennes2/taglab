@@ -31,6 +31,8 @@
 							<% if !params[:type].nil? %>
 								<% if params[:type] == "Frequency" %>
 									<%= select_tag "frequency_type", options_for_select(["day","week","month","year"], params[:ftype]) %>
+								<% else %>
+									<%= select_tag "frequency_type", options_for_select(["day","week","month","year"]) %>
 								<% end %>
 							<% else %>
 									<%= select_tag "frequency_type", options_for_select(["day","week","month","year"]) %>							
