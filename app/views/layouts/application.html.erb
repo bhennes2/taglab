@@ -42,7 +42,6 @@
 		
 		<!-- Include jquery plugin for graphs -->
 		<script src="/javascripts/jquery.jqplot.js"></script>
-		<script src="/javascripts/swipe.js"></script>
 		
 		<!-- Start iOS -->
 		<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -96,14 +95,26 @@
 		var horizontal = [0,0];
 		var time;
 		
+		var el = document.getElementsByTagName("header")[0];  
+  		el.addEventListener("touchstart", handleStart, false);  
+  		el.addEventListener("touchend", handleEnd, false);  
+		el.addEventListener("touchleave", handleEnd, false);
+  	});	
 
-
-$(document).bind('touchstart',function(event){
+		function handlestart(event) {
           var orig = event.originalEvent;  
-          var x = orig.changedTouches[0].pageX;  
-          var y = orig.changedTouches[0].pageY;  
-          alert("x:"+x+"y:"+y);
-      });	
+          var horizontal[0] = orig.changedTouches[0].pageX;  
+          var vertical[0] = orig.changedTouches[0].pageY;  
+		}
+		
+		function handleEnd(event) {
+          var orig = event.originalEvent;  
+          var horizontal[0] = orig.changedTouches[0].pageX;  
+          var vertical[0] = orig.changedTouches[0].pageY;  
+		  alert(horizontal[0]);
+		}
+          
+      	
 /*	  
 		$("#header").mouseup(function(e){
       		horizontal[1] = e.pageX;
