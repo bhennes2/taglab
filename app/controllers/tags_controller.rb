@@ -149,7 +149,7 @@ class TagsController < ApplicationController
   def experiments
   	@title = "Experiments"
 	
-	@tags = Tag.where(:user_id => current_user)
+	@tags = Tag.where(:user_id => current_user).group(:title)
   end  
   
   def conduct

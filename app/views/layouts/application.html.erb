@@ -89,3 +89,28 @@
 	</body>
 </html>
 
+<script>
+	$(document).ready(function(){
+		var vertical = [0,0];
+		var horizontal = [0,0];
+		
+   		$("#header").mousedown(function(e){
+      		horizontal[0] = e.pageX;
+			vertical[0] = e.pageY;
+   		}); 
+		$("#header").mouseup(function(e){
+      		horizontal[1] = e.pageX;
+			vertical[1] = e.pageY;
+			
+			if ((horizontal[0] - horizontal[1]) > 30 && Math.abs(vertical[0] - vertical[1]) < 75 ){
+				alert("Swipe left!");
+				window.location.replace("<%= root_url %>");
+			}
+			else if ((horizontal[1] - horizontal[0]) > 30 && Math.abs(vertical[0] - vertical[1]) < 75 ){
+				alert("Sign out!");
+				window.location.replace("<%= root_url %>signout");
+			}
+   		});
+	});
+</script>
+
