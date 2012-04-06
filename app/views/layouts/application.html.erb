@@ -108,9 +108,9 @@
 		}
 		
 		function handleEnd(event) {
-          var orig = event.originalEvent;  
-          var horizontal[0] = orig.changedTouches[0].pageX;  
-          var vertical[0] = orig.changedTouches[0].pageY;  
+		  var end = event.changedTouches;  
+          var horizontal[0] = end[touches.length-1].pageX;  
+          var vertical[0] = end[touches.lenght-1].pageY;  
 		  alert(horizontal[0]);
 		}
           
