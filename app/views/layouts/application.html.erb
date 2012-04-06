@@ -116,17 +116,17 @@
 				var d_x = x2 - x1;
 				var d_y = y2 - y1;
 
-				if (d_x > 10){	
+				if (d_x < -10){	
 					window.location.replace("<%= root_url %>");
 				}
-				else if (d_x < -10){
+				else if (d_x > 10){
 					$("#dialog").dialog({
 					resizable: false,
 					height:140,
 					modal: true,
 					buttons: {
 						"Yes": function() {
-							window.location.replace("<%= root_url %>signout");
+							$.get("/signout", null, null, 'script');
 							$(this).dialog( "close" );
 						},
 						"No": function() {
