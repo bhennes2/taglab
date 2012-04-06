@@ -92,9 +92,9 @@
 <script>
 		
 		
-		$(document).bind({
+		$("#header").bind({
 			touchstart: function(event){
-				event.preventDefault();
+				//event.preventDefault();
           		var orig = event.originalEvent;  
           		var x1 = orig.changedTouches[0].pageX;  
           		var y1 = orig.changedTouches[0].pageY;  
