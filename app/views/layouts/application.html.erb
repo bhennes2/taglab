@@ -133,10 +133,10 @@
   								},
 								url: "/signout",
 								dataType: 'script',
-								type: 'GET'
+								type: 'POST'
 							});	
 							$(this).dialog( "close" );
-							window.location.reload("<%= root_url %>");
+							window.location.replace("<%= root_url %>");
 						},
 						"No": function() {
 							$( this ).dialog( "close" );
