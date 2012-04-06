@@ -90,19 +90,14 @@
 </html>
 
 <script>
-	$(document).ready(function(){
-		var vertical = [0,0];
-		var horizontal = [0,0];
-		var time;
-		
-  	});	
+	
 		
 		$(document).bind('touchstart',function(event){
           var orig = event.originalEvent;  
-          horizontal[0] = orig.changedTouches[0].pageX;  
-          vertical[0] = orig.changedTouches[0].pageY;  
-          alert("x:"+horizontal[0]+"y:"+vertical[0]);
-      });
+          var x = orig.changedTouches[0].pageX;  
+          var y = orig.changedTouches[0].pageY;  
+          alert("x:"+x+"y:"+y);
+     	});
 		
 		/*
 		function handleEnd(event) {
