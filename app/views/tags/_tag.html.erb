@@ -21,9 +21,14 @@
 			<% end %>-->
 			
 		</span>	
-		<div id="button<%= tag.id %>" style="float: right; display: none;">
-				<img src="/images/delete.png" style="max-width: 80px; padding-right: 5px; position: relative; top: -40px;" />
+		<div id="button<%= tag.id %>" style="float: right; position: relative; top: -50px; padding-right: 5px; display: none; ">
+				<form method="post" action="/tags/<%= tag.id %>"  class="button_to">
+					<div>
+						<input name="_method" type="hidden" value="delete" />
+						<input class="delete-button" onclick="return confirm('Are you sure you want to delete?')" type="submit" value="" />
+						<input name="authenticity_token" type="hidden" value="2C2etdcJc7JM+r/G8IkZPQF0W5fv+Y/N6rm9q5frJ7E=" />
+					</div>
+				</form>
 		</div>
-			
 </li>
 

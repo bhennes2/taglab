@@ -35,6 +35,7 @@ class QuickTagsController < ApplicationController
 
   # GET /quick_tags/1/edit
   def edit
+  	@title = "Edit Quick tag"
     @quick_tag = QuickTag.find(params[:id])
   end
 

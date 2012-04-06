@@ -29,8 +29,8 @@
 		<!--<script type="text/javascript" src="/javascripts/dragdrop.js"></script>-->
 		<!-- <%= javascript_include_tag :defaults %>-->
 		<!-- <%= javascript_include_tag "application" %>	-->	
-		
-		<script src="/javascripts/jquery-ui-1.8.17.custom.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+		<!--<script src="/javascripts/jquery-ui-1.8.17.custom.min.js"></script>-->
 		
 		
 		
@@ -85,7 +85,10 @@
 					<%= yield %>
 					<%= render 'layouts/footer' %>
 				<% end %>
-		</div><!--close wrapper--> 
+				<div id="dialog" title="Sign out?" style="display: none;" >
+					<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span></p>
+				</div>
+			</div><!--close wrapper--> 
 	</body>
 </html>
 
@@ -94,6 +97,9 @@
 		var x2 = 0;
 		var y1 = 0;
 		var y2 = 0;
+		
+		var horizontal = [0,0];
+		var vertical = [0,0];
 		
 		$("#header").bind({
 			touchstart: function(event){
@@ -114,14 +120,27 @@
 					window.location.replace("<%= root_url %>");
 				}
 				else if (d_x < -10){
-					alert("Signing out...");
-				}
+					$("#dialog").dialog({
+					resizable: false,
+					height:140,
+					modal: true,
+					buttons: {
+						"Yes": function() {
+							window.location.replace("<%= root_url %>signout");
+							$(this).dialog( "close" );
+						},
+						"No": function() {
+							$( this ).dialog( "close" );
+						}
+					}
+					});
 				x1 = 0;
 				x2 = 0;
 				y1 = 0;
 				y2 = 0;
 			}
-     	});
+     	}
+		});
 		
 		$(".single-tag").bind({
 			touchstart: function(event){
@@ -147,18 +166,35 @@
 				y2 = 0;
 			}
      	});
-		
 		/*
-		function handleEnd(event) {
-		  var end = event.changedTouches;  
-          var horizontal[1] = end[touches.length-1].pageX;  
-          var vertical[1] = end[touches.length-1].pageY;  
-		  alert(horizontal[1]);
-		}*/
-          
-      	
-/*	  
-		$("#header").mouseup(function(e){
+		$(".quick-tag").bind({
+			touchstart: function(event){
+				event.preventDefault();
+          		var orig = event.originalEvent;  
+          		x1 = orig.changedTouches[0].pageX;  
+          		y1 = orig.changedTouches[0].pageY;  
+          	},
+			touchmove: function(event){
+				event.preventDefault();
+				var touch = event.originalEvent.touches[0] || event.originalEvent.changedTouches[0];
+          		x2 = touch.pageX;  
+          		y2 = touch.pageY;  
+				var d_x = x2 - x1;
+				var d_y = y2 - y1;
+
+				if (d_x > 5){
+					$("#quick_button"+$(event.currentTarget).attr('id')).show();
+				}
+				x1 = 0;
+				x2 = 0;
+				y1 = 0;
+				y2 = 0;
+			}
+     	});*/
+		
+		
+     	
+		/*$("#header").mouseup(function(e){
       		horizontal[1] = e.pageX;
 			vertical[1] = e.pageY;
 			
@@ -166,34 +202,22 @@
 				window.location.replace("<%= root_url %>");
 			}
 			else if ((horizontal[1] - horizontal[0]) > 30 && Math.abs(vertical[0] - vertical[1]) < 75 ){
-				window.location.replace("<%= root_url %>signout");
+				
+				$("#dialog").dialog({
+					resizable: false,
+					height: 140,
+					modal: true,
+					buttons: {
+						"Yes": function() {
+							window.location.replace("<%= root_url %>signout");
+							$(this).dialog( "close" );
+						},
+						"No": function() {
+							$( this ).dialog( "close" );
+						}
+					}	
+				});
 			}
-   		});
-		
-		$(".single-tag").mousedown(function(event){
-      		//horizontal[0] = e.pageX;
-			//vertical[0] = e.pageY;
-			$("#button"+$(event.currentTarget).attr('id')).html("Delete").show();
-   		});*/
-		
-		
-		/*
-   		$("#header").mousedown(function(e){
-      		horizontal[0] = e.pageX;
-			vertical[0] = e.pageY;
-   		}); 
-		$("#header").mouseup(function(e){
-      		horizontal[1] = e.pageX;
-			vertical[1] = e.pageY;
-			
-			if ((horizontal[0] - horizontal[1]) > 30 && Math.abs(vertical[0] - vertical[1]) < 75 ){
-				alert("Swipe left!");
-				window.location.replace("<%= root_url %>");
-			}
-			else if ((horizontal[1] - horizontal[0]) > 30 && Math.abs(vertical[0] - vertical[1]) < 75 ){
-				alert("Sign out!");
-				window.location.replace("<%= root_url %>signout");
-			}
-   		});*/
+		});*/
 </script>
 

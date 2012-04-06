@@ -3,9 +3,9 @@
 			<div style="text-align: center; padding-bottom: 10px;">
         		<span style="font-family: Helvetica, sans-serif; font-size: 18px;">
 					<a href="<%= new_quick_tag_path %>" style="color: #ff6600; text-decoration: none;">+ Add</a> 
-					<span class="name">Edit
+					<!--<span class="name">Edit
 						<input name="location" type="checkbox" id="edit_quick_tag" unchecked="true" />
-					</span>
+					</span>-->
             </div>
 			<% if current_user.quick_tags == [] %>
 				<ul class="pageitem">
@@ -28,6 +28,9 @@
 								<% elsif quick_tag.location == 0 %>
 									<span class="title quicktag" id="<%= quick_tag.id %>"><%= quick_tag.title %></span>
 								<% end %>
+								<div id="quick_button<%= quick_tag.id %>" style="float: right; position: relative; top: -25px; padding-right: 5px; display: none;">
+									<a href="/quick_tags/<%= quick_tag.id %>/edit"><img src="/images/edit.jpg" /></a>
+								</div>
 							</li>
 					<% if next_quick_tag.category.downcase != quick_tag.category.downcase %>
 						</ul>
@@ -47,12 +50,12 @@
 	}
 	
 	$(".quicktag").click(function(){
-		if (document.getElementById("edit_quick_tag").checked)
+		/*if (document.getElementById("edit_quick_tag").checked)
 		{
 			// Load edit page for specific quick tag	
 			window.location.replace("<%= root_url %>quick_tags/"+$(this).attr("id")+"/edit");
-		}
-		else
+		}*/
+		if (true)
 		{	
 			var position = $("#tag_location").val();
 			$.ajax({
