@@ -109,7 +109,42 @@
           		y2 = touch.pageY;  
 				var d_x = x2 - x1;
 				var d_y = y2 - y1;
-          		alert("x:"+d_x+"y:"+d_y);
+
+				if (d_x > 5){	
+					window.location.replace("<%= root_url %>");
+				}
+				else if (d_x < -5){
+					window.location.replace("<%= root_url %>signout");
+				}
+				x1 = 0;
+				x2 = 0;
+				y1 = 0;
+				y2 = 0;
+			}
+     	});
+		
+		$(".single-tag").bind({
+			touchstart: function(event){
+				event.preventDefault();
+          		var orig = event.originalEvent;  
+          		x1 = orig.changedTouches[0].pageX;  
+          		y1 = orig.changedTouches[0].pageY;  
+          	},
+			touchmove: function(event){
+				event.preventDefault();
+				var touch = event.originalEvent.touches[0] || event.originalEvent.changedTouches[0];
+          		x2 = touch.pageX;  
+          		y2 = touch.pageY;  
+				var d_x = x2 - x1;
+				var d_y = y2 - y1;
+
+				if (d_x > 5){
+					$("#button"+$(event.currentTarget).attr('id')).html('<img src="/images/delete.png" style="max-width: 80px;" />').show();
+				}
+				x1 = 0;
+				x2 = 0;
+				y1 = 0;
+				y2 = 0;
 			}
      	});
 		
@@ -160,13 +195,5 @@
 				window.location.replace("<%= root_url %>signout");
 			}
    		});*/
-		
-		$(".single-tag").mousedown(function(event){
-      		//horizontal[0] = e.pageX;
-			//vertical[0] = e.pageY;
-			$("#button"+$(event.currentTarget).attr('id')).html('<img src="/images/delete.png" style="max-width: 80px;" />').show();
-   		}); 
-		
-
 </script>
 
