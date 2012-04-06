@@ -195,6 +195,7 @@ h2 {color: #ff6600;}
 #header {text-align: center; height: 60px;}
 .logo {max-width: 60%; padding-top: 10px;}
 .back {position:absolute; top: 15px; left: 10px;}
+.new {position:absolute; top: 15px; left: 250px;}
 #content {padding: 10px 0; border-top: 5px solid #fff; border-bottom: 5px solid #fff; min-height: 330px; background: url(../images/content-bg.gif)}
 
 /* NAV */

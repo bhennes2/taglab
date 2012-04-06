@@ -97,12 +97,6 @@
           		var orig = event.originalEvent;  
           		var x = orig.changedTouches[0].pageX;  
           		var y = orig.changedTouches[0].pageY;  
-          		//alert("x:"+x+"y:"+y);
-			},
-			touchend: function(event){
-          		var end = event.changedTouches;  
-          		var x = end[touches.length - 1].pageX;  
-          		var y = end[touches.length - 1].pageY;  
           		alert("x:"+x+"y:"+y);
 			}
      	});
