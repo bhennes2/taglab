@@ -98,14 +98,15 @@
           		var orig = event.originalEvent;  
           		var x1 = orig.changedTouches[0].pageX;  
           		var y1 = orig.changedTouches[0].pageY;  
-          		//alert("x:"+x+"y:"+y);
+          		alert("x:"+x+"y:"+y);
 			},
 			touchmove: function(event){
-				event.preventDefault();
-				var orig = event.originalEvent;  
-          		var x2 = orig.changedTouches[0].pageX;  
-          		var y2 = orig.changedTouches[0].pageY;  
-          		alert("x:"+(x2-x1)+"y:"+(y2-y1));
+				//event.preventDefault();
+				//var orig = event.originalEvent;  
+          		//var x2 = orig.changedTouches[0].pageX;  
+          		//var y2 = orig.changedTouches[0].pageY;  
+          		//alert("x:"+(x2-x1)+"y:"+(y2-y1));
+				//alert("hello");
 			}
      	});
 		
