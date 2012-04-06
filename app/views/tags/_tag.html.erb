@@ -2,6 +2,7 @@
 	<a href="<%= edit_tag_path(tag) %>">
 		<span class="title"><%= tag.title %></span>
 	</a>
+				
 		<span class="time">
 			Tagged on <a class="day_tag" onclick="$('#interior').load('<%= root_url %>tags_day?time=<%= tag.time %>')" ><%= Time.at(tag.time.to_i).in_time_zone(current_user.time_zone).strftime(" %-m/%-d/%y") %></a>
 			<%= Time.at(tag.time.to_i).in_time_zone(current_user.time_zone).strftime(" @%l:%M %P") %>
@@ -18,8 +19,11 @@
 			<!--<% form_tag tag, :method => :delete, :class => "delete_tag" do %>
 				<% image_submit_tag "../images/close_icon.gif", :onclick => "return confirm('Are you sure you want to delete?')" %>
 			<% end %>-->
-			<div id="button<%= tag.id %>" style="float: right; display: none;"></div>
+			
 		</span>	
+		<div id="button<%= tag.id %>" style="float: right; display: none;">
+				<img src="/images/delete.png" style="max-width: 80px; padding-right: 5px; position: relative; top: -40px;" />
+		</div>
 			
 </li>
 

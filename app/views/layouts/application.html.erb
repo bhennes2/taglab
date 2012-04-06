@@ -110,10 +110,11 @@
 				var d_x = x2 - x1;
 				var d_y = y2 - y1;
 
-				if (d_x > 5){	
+				if (d_x > 10){	
 					window.location.replace("<%= root_url %>");
 				}
-				else if (d_x < -5){
+				else if (d_x < -10){
+					alert("Signing out...");
 					window.location.replace("<%= root_url %>signout");
 				}
 				x1 = 0;
