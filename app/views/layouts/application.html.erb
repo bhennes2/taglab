@@ -95,17 +95,15 @@
 		var horizontal = [0,0];
 		var time;
 		
-		var el = document.getElementsByTagName("header")[0];  
-  		el.addEventListener("touchstart", handleStart, false);  
-  		el.addEventListener("touchend", handleEnd, false);  
   	});	
-
-		function handlestart(event) {
+		
+		$(document).bind('touchstart',function(event){
           var orig = event.originalEvent;  
-          var horizontal[0] = orig.changedTouches[0].pageX;  
-          var vertical[0] = orig.changedTouches[0].pageY;  
-		  alert(horizontal[0]);
-		}
+          horizontal[0] = orig.changedTouches[0].pageX;  
+          vertical[0] = orig.changedTouches[0].pageY;  
+          alert("x:"+horizontal[0]+"y:"+vertical[0]);
+      });
+		
 		/*
 		function handleEnd(event) {
 		  var end = event.changedTouches;  
@@ -159,7 +157,7 @@
 			//vertical[0] = e.pageY;
 			$("#button"+$(event.currentTarget).attr('id')).html("Delete").show();
    		}); 
-		*/
-	});
+		
+	});*/
 </script>
 
