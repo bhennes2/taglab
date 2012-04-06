@@ -106,7 +106,8 @@
 				event.preventDefault();
           		var orig = event.originalEvent;  
           		x1 = orig.changedTouches[0].pageX;  
-          		y1 = orig.changedTouches[0].pageY;  
+          		y1 = orig.changedTouches[0].pageY;
+				return false;				
           	},
 			touchmove: function(event){
 				event.preventDefault();
@@ -126,8 +127,16 @@
 					modal: true,
 					buttons: {
 						"Yes": function() {
-							$.get("/signout", null, null, 'script');
+							$.ajax({
+								beforeSend: function(xhr) {
+    								xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+  								},
+								url: "/signout",
+								dataType: 'script',
+								type: 'GET'
+							});	
 							$(this).dialog( "close" );
+							window.location.reload("<%= root_url %>");
 						},
 						"No": function() {
 							$( this ).dialog( "close" );
@@ -138,6 +147,7 @@
 				x2 = 0;
 				y1 = 0;
 				y2 = 0;
+				return false;
 			}
      	}
 		});
@@ -148,6 +158,7 @@
           		var orig = event.originalEvent;  
           		x1 = orig.changedTouches[0].pageX;  
           		y1 = orig.changedTouches[0].pageY;  
+				return false;
           	},
 			touchmove: function(event){
 				event.preventDefault();
@@ -164,6 +175,7 @@
 				x2 = 0;
 				y1 = 0;
 				y2 = 0;
+				return false;
 			}
      	});
 		
@@ -173,6 +185,7 @@
           		var orig = event.originalEvent;  
           		x1 = orig.changedTouches[0].pageX;  
           		y1 = orig.changedTouches[0].pageY;
+				return false;
           	},
 			touchmove: function(event){
 				event.preventDefault();
@@ -189,6 +202,7 @@
 				x2 = 0;
 				y1 = 0;
 				y2 = 0;
+				return false;
 			}
      	});
 		
