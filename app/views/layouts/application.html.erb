@@ -90,23 +90,26 @@
 </html>
 
 <script>
-		
+		var x1 = 0;
+		var x2 = 0;
+		var y1 = 0;
+		var y2 = 0;
 		
 		$("#header").bind({
 			touchstart: function(event){
 				event.preventDefault();
           		var orig = event.originalEvent;  
-          		var x1 = orig.changedTouches[0].pageX;  
-          		var y1 = orig.changedTouches[0].pageY;  
-          		//alert("x:"+x1+"y:"+y1);
-			},
+          		x1 = orig.changedTouches[0].pageX;  
+          		y1 = orig.changedTouches[0].pageY;  
+          	},
 			touchmove: function(event){
 				event.preventDefault();
 				var touch = event.originalEvent.touches[0] || event.originalEvent.changedTouches[0];
-          		var x2 = touch.pageX;  
-          		var y2 = touch.pageY;  
-          		alert("x:"+x2+"y:"+y2);
-				//alert("hello");
+          		x2 = touch.pageX;  
+          		y2 = touch.pageY;  
+				var d_x = x2 - x1;
+				var d_y = y2 - y1;
+          		alert("x:"+d_x+"y:"+d_y);
 			}
      	});
 		
