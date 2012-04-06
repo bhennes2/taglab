@@ -94,16 +94,18 @@
 		
 		$(document).bind({
 			touchstart: function(event){
+				event.preventDefault();
           		var orig = event.originalEvent;  
-          		var x = orig.changedTouches[0].pageX;  
-          		var y = orig.changedTouches[0].pageY;  
+          		var x1 = orig.changedTouches[0].pageX;  
+          		var y1 = orig.changedTouches[0].pageY;  
           		//alert("x:"+x+"y:"+y);
 			},
 			touchmove: function(event){
-				//var x = event.changedTouches[0].pageX;
-  				//var y = event.changedTouches[0].pageY;
-				//alert("x:"+x+"y:"+y);
-				alert("Touch end");
+				event.preventDefault();
+				var orig = event.originalEvent;  
+          		var x2 = orig.changedTouches[0].pageX;  
+          		var y2 = orig.changedTouches[0].pageY;  
+          		alert("x:"+(x2-x1)+"y:"+(y2-y1));
 			}
      	});
 		
