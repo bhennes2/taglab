@@ -92,7 +92,7 @@
 			var date = $("#date").val().toString().split("-");
 			var time = $("#time_of_day").val().toString().split(":");
 			var dt = Date.UTC(parseInt(date[0]), parseInt(date[1])-1, parseInt(date[2]), parseInt(time[0]), parseInt(time[1]), parseInt(time[2]));
-			var offset = new Date(at);
+			var offset = new Date();
 			offset = offset.getTimezoneOffset()*60;
 			$("#tag_time").val(dt/1000+offset);
 						
