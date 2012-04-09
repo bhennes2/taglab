@@ -6,10 +6,16 @@ class TagsController < ApplicationController
   # GET /tags.xml
   def index
     @title = "View tags"
-	@tags = Tag.paginate :per_page => 10, :page => params[:page],
-										  :conditions => { :user_id => current_user.id },
-										  :order => 'tags.time DESC'
-	
+	@today = DateTime.now
+	@current_week = @today.cweek
+	@start_day_week = @today.beginning_of_week
+	@stop_day_week = @today.end_of_week
+	@tags = Tag.where("user_id = :current_user AND created_at >= :start_date AND created_at <= :end_date", 
+		{:current_user => current_user.id, :start_date => @start_day_week, :end_date => @stop_day_week}).paginate(:per_page => 10, :page => params[:page])
+
+	@start = @start_day_week.strftime("%b %-d")
+	@stop = @stop_day_week.strftime("%b %-d")
+		
 	if request.xhr?
 		sleep(2)
 		render :partial => @tags
@@ -130,20 +136,34 @@ class TagsController < ApplicationController
   end
   
   def tagsday
+  	@title = "Day tags"
   	@tags = Tag.paginate :per_page => 10, :page => params[:page],
 						 :conditions => { :date => Time.at(params[:time].to_i).to_date,
 										  :user_id => current_user.id },
 						 :order => 'tags.time DESC'	
 
-	if request.xhr?
-		sleep(0)
-	end
-	respond_to do |format|
-		format.html 
-		format.js 
+    respond_to do |format|
+		format.html
+		format.js		 
 	end
 	
   end 
+  
+  def week
+  	@title = "View tags"
+	@current_week = params[:week].to_i + params[:type].to_i
+	
+	@day = DateTime.now + 6*(@current_week - DateTime.now.cweek)
+	@start_day_week = @day.beginning_of_week
+	@stop_day_week = @day.end_of_week
+	
+	@tags = Tag.where("user_id = :current_user AND created_at >= :start_date AND created_at <= :end_date", 
+		{:current_user => current_user.id, :start_date => @start_day_week, :end_date => @stop_day_week}).paginate(:per_page => 10, :page => params[:page])
+
+	@start = @start_day_week.strftime("%b %-d")
+	@stop = @stop_day_week.strftime("%b %-d")
+
+  end
 
 	
   def experiments

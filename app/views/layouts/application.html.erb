@@ -102,13 +102,13 @@
 		var vertical = [0,0];
 				
 		$("#header").bind({
-			touchstart: function(event){
+			/*touchstart: function(event){
 				//event.preventDefault();
           		var orig = event.originalEvent;  
           		x1 = orig.changedTouches[0].pageX;  
           		y1 = orig.changedTouches[0].pageY;
 				return false;				
-          	},
+          	},*/
 			touchmove: function(event){
 				//event.preventDefault();
 				var touch = event.originalEvent.touches[0] || event.originalEvent.changedTouches[0];
@@ -136,7 +136,7 @@
 								type: 'POST'
 							});	
 							$(this).dialog( "close" );
-							window.location.replace("<%= root_url %>");
+							//window.location.replace("<%= root_url %>");
 						},
 						"No": function() {
 							$( this ).dialog( "close" );
@@ -153,13 +153,13 @@
 		});
 		
 		$(".single-tag").bind({
-			touchstart: function(event){
+			/*touchstart: function(event){
 				//event.preventDefault();
           		var orig = event.originalEvent;  
           		x1 = orig.changedTouches[0].pageX;  
           		y1 = orig.changedTouches[0].pageY;  
 				return false;
-          	},
+          	},*/
 			touchmove: function(event){
 				//event.preventDefault();
 				var touch = event.originalEvent.touches[0] || event.originalEvent.changedTouches[0];
@@ -169,7 +169,7 @@
 				var d_y = y2 - y1;
 
 				if (d_x > 5){
-					$("#button"+$(event.currentTarget).attr('id')).show();
+					$("#button"+$(event.currentTarget).attr('id')).slideDown();
 				}
 				x1 = 0;
 				x2 = 0;
@@ -180,15 +180,15 @@
      	});
 		
 		$(".quick-tag").bind({
-			touchstart: function(event){
-				event.preventDefault();
+			/*touchstart: function(event){
+				//event.preventDefault();
           		var orig = event.originalEvent;  
           		x1 = orig.changedTouches[0].pageX;  
           		y1 = orig.changedTouches[0].pageY;
 				return false;
-          	},
+          	},*/
 			touchmove: function(event){
-				event.preventDefault();
+				//event.preventDefault();
 				var touch = event.originalEvent.touches[0] || event.originalEvent.changedTouches[0];
           		x2 = touch.pageX;  
           		y2 = touch.pageY;  
@@ -196,7 +196,7 @@
 				var d_y = y2 - y1;
 
 				if (d_x > 5){
-					$("#quick_button"+$(event.currentTarget).attr('id')).show();
+					$("#quick_button"+$(event.currentTarget).attr('id')).slideDown();
 				}
 				x1 = 0;
 				x2 = 0;

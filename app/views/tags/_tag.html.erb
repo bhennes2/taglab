@@ -4,11 +4,10 @@
 	</a>
 				
 		<span class="time">
-			Tagged on <a class="day_tag" onclick="$('#interior').load('<%= root_url %>tags_day?time=<%= tag.time %>')" ><%= Time.at(tag.time.to_i).in_time_zone(current_user.time_zone).strftime(" %-m/%-d/%y") %></a>
+			Tagged on <a class="day_tag" href="<%= root_url %>tags_day?time=<%= tag.time %>" ><%= Time.at(tag.time.to_i).in_time_zone(current_user.time_zone).strftime(" %-m/%-d/%y") %></a>
 			<%= Time.at(tag.time.to_i).in_time_zone(current_user.time_zone).strftime(" @%l:%M %P") %>
 			
 			<!-- if click link, load tags for that specific day....load partial with filtered results by that day -->
-			
 			<% if tag.location != "0" %>
 				<span><img class="location-arrow" src="/images/location.png" /></span>
 			<% end %>									
@@ -16,10 +15,6 @@
 			<% if !tag.image_file_size.nil? %>
 				<span><img class="location-arrow" src="/images/photo.png" /></span>
 			<% end %>	
-			<!--<% form_tag tag, :method => :delete, :class => "delete_tag" do %>
-				<% image_submit_tag "../images/close_icon.gif", :onclick => "return confirm('Are you sure you want to delete?')" %>
-			<% end %>-->
-			
 		</span>	
 		<div id="button<%= tag.id %>" style="float: right; position: relative; top: -50px; padding-right: 5px; display: none; ">
 				<form method="post" action="/tags/<%= tag.id %>"  class="button_to">

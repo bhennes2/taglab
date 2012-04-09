@@ -1,11 +1,23 @@
 <div id="alerts" class="alert"></div>
 <div id="interior">
-	<ul class="pageitem" id="interior_ul">
-		<%= render :partial => @tags, :collection => @tags %>	
-
-		<%= will_paginate @tags %>
-		<%= pageless(@tags.total_pages, '/tags') %>		
-	</ul>
+	<span class="quickgroup">
+		<a href="/week?week=<%= @current_week%>&type=-1"><img src="/images/back.png" title="Previous week" style="max-width: 20px;" /></a>
+		Week <%= @current_week %>: <%= @start %> - <%= @stop %>
+		<a href="/week?week=<%= @current_week%>&type=1"><img src="/images/next.png" title="Next week" style="max-width: 20px;" /></a>
+	</span>
+	<% if @tags != [] %>
+		<ul class="pageitem" id="interior_ul">
+			<%= render :partial => @tags, :collection => @tags %>	
+			<% will_paginate @tags %>
+			<% pageless(@tags.total_pages, '/tags') %>		
+		</ul>
+	<% else %>
+		<ul class="pageitem" id="interior_ul">
+			<li class="single-tag">
+				<span class="title">No tags for this week</span>			
+			</li>	
+		</ul>
+	<% end %>
 </div><!--close interior-->
 	
 <script>

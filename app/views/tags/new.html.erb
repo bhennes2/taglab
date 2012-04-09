@@ -26,8 +26,7 @@
 					</ul>
 					<ul class="pageitem">
 			            <li class="checkbox"><span class="name">Location</span>
-							<!--<input name="location" type="checkbox" />-->
-							<%= f.check_box :location %>
+							<input id="location_checkbox" type="checkbox" />
 						</li>
 					</ul>
 				
@@ -41,17 +40,14 @@
 							<%= f.submit :class => "orange", :value => "TAG IT!" %>
 						</li>
 					</ul>
-					<div id="user_id">
-    					<%= f.text_field :user_id, :value=> current_user.id %>
-  					</div>
-					<div id="time">
-    					
-						<% time = Time.now.utc.to_i
-			     			location = "holder"
-						%>
-					    <%= f.text_field :time, :value=> time %>
-						<%= f.text_field :date, :value=> Time.now.to_date %>
-  					</div>
+					<%= f.hidden_field :user_id, :value=> current_user.id %>
+   					
+					<% time = Time.now.utc.to_i
+			     			location = "holder"	%>
+					    <%= f.hidden_field :time, :value=> time %>
+						<%= f.hidden_field :date, :value=> Time.now.to_date %>
+						<%= f.hidden_field :location %>
+						<input type="hidden" id="tag_location_holder" />
 				</fieldset>
 		        
 			<% end %>
@@ -80,10 +76,6 @@
 			}
 		});
 	});
-	
-	function initialize(){
-		return true;
-	}
 					
 	var agent=navigator.userAgent.toLowerCase();
 	var is_iphone = (agent.indexOf('iphone')!=-1);
@@ -92,15 +84,24 @@
 		//If browser is either on iPhone or iPad, don't show image upload
 		$('#file_field').hide();
 	}	
-	function update_fields(quick_tag) {
-		document.forms["new_tag"]["tag_title"].value = quick_tag;
-		document.forms["new_tag"].submit();
-	}
 	
 	function showMap(position) {
       		// Show a map centered at (position.coords.latitude, position.coords.longitude).
-			document.edit_tag.tag_location.value = position.coords.latitude+","+position.coords.longitude;
+			$("#tag_location_holder").val(position.coords.latitude+","+position.coords.longitude);
 	}
+	
+	$("#tag_submit").click(function(){
+						
+			//Get latest location
+			if ($("#location_checkbox").is(':checked')){
+				//If location on 
+				$("#tag_location").val($("#tag_location_holder").val());
+			}
+			else if (!$("#location_checkbox").is(':checked')){
+				$("#tag_location").val("0");
+			}			
+			return true;
+	});
 	
 	// One-shot position request.
     navigator.geolocation.getCurrentPosition(showMap);

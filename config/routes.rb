@@ -73,6 +73,9 @@ Quicktag::Application.routes.draw do
   # Provide route for viewing help page
   match "/help" => "help#index"
   
+  # Provide route for viewing weeks
+  match "/week" => "tags#week"
+  
   # Provide route for admin pages
   match "/admin" => "admin#index"
   match "/admin/users" => "admin#users"
