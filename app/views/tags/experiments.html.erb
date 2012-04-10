@@ -2,19 +2,19 @@
 	<div id="interior">
 		<%= form_tag('/conduct', :method => 'GET') do %>
   				<fieldset>
+					<label>Variable Source</label>
 					<ul class="pageitem">
-						<label>Data source</label>
 						<li class="bigfield">
 							<span class="arrow"></span>
 							<% if !params[:data].nil? %>
 								<%= select_tag "data_source", options_from_collection_for_select(@tags, "title", "title", params[:data]) %>
 							<% else %>
-								<%= select_tag "data_source", options_from_collection_for_select(@tags, "title", "title") %>
+								<%= select_tag "data_source", options_from_collection_for_select(@tags, "title", "title"), :placeholder => "Data source" %>
 							<% end %>
 						</li>
 					</ul>
+					<label>Calculation Type</label>
 					<ul class="pageitem">
-						<label>Calculation</label>
 						<li class="bigfield">
 							<span class="arrow"></span>
 							<% if !params[:type].nil? %>
@@ -24,6 +24,7 @@
 							<% end %>
 						</li>
 					</ul>
+					
 					<ul id="frequency_type_holder" style="display: none;" class="pageitem">
 						<label>Frequency Type</label>
 						<li class="bigfield">
@@ -41,7 +42,7 @@
 					</ul>
 					<ul class="pageitem">      
 						<li class="button">
-							<%= submit_tag "RUN IT!", :class => "orange" %>
+							<%= submit_tag "RUN YOUR EXPERIMENT!", :class => "orange" %>
 						</li>
 					</ul>
 				</fieldset>

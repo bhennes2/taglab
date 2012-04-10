@@ -129,9 +129,16 @@ class TagsController < ApplicationController
 	
 	@tag.save
 
-	@tags = Tag.paginate :per_page => 10, :page => params[:page],
-										  :conditions => { :user_id => params[:user_id] },
-										  :order => 'tags.time DESC'
+	@title = "View tags"
+	@today = DateTime.now
+	@current_week = @today.cweek
+	@start_day_week = @today.beginning_of_week
+	@stop_day_week = @today.end_of_week
+	@tags = Tag.where("user_id = :current_user AND created_at >= :start_date AND created_at <= :end_date", 
+		{:current_user => current_user.id, :start_date => @start_day_week, :end_date => @stop_day_week}).paginate(:per_page => 10, :page => params[:page])
+
+	@start = @start_day_week.strftime("%b %-d")
+	@stop = @stop_day_week.strftime("%b %-d")
 		
   end
   
@@ -162,7 +169,6 @@ class TagsController < ApplicationController
 
 	@start = @start_day_week.strftime("%b %-d")
 	@stop = @stop_day_week.strftime("%b %-d")
-
   end
 
 	
@@ -173,7 +179,7 @@ class TagsController < ApplicationController
   end  
   
   def conduct
-  	@title = "Results"
+  	@title = params[:data_source]
 	
 	@calc = params[:calculation_type]
 	@data = Tag.where(:user_id => current_user, :title => params[:data_source]).select(:time).order("time ASC")

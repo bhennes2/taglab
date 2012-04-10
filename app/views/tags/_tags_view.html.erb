@@ -1,9 +1,9 @@
 <div id="alerts" class="alert"></div>
 <div id="interior">
-	<span class="quickgroup">
-		<a href="/week?week=<%= @current_week%>&type=-1"><img src="/images/back.png" title="Previous week" style="max-width: 20px;" /></a>
+	<span class="quickgroup" id="week_header">
+		<!--<a href="/week?week=<%= @current_week%>&type=-1"><img src="/images/back.png" title="Previous week" style="max-width: 20px;" /></a>-->
 		Week <%= @current_week %>: <%= @start %> - <%= @stop %>
-		<a href="/week?week=<%= @current_week%>&type=1"><img src="/images/next.png" title="Next week" style="max-width: 20px;" /></a>
+		<!--<a href="/week?week=<%= @current_week%>&type=1"><img src="/images/next.png" title="Next week" style="max-width: 20px;" /></a>-->
 	</span>
 	<% if @tags != [] %>
 		<ul class="pageitem" id="interior_ul">

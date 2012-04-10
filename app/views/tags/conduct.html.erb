@@ -2,25 +2,55 @@
 	<div id="interior">
 		<% if @calc == "Frequency" %>
 			Frequency (#/<%= params[:frequency_type] %>): <span id="frequency"></span>
+			<ul class="pageitem" style="padding: 8px 0 4px 8px;">
+        		<div id="chart" style=" height: 264px; width: 264px;">
+					<img src="/images/loading.gif" title="Loading..." />
+				</div>
+			</ul>
 		<% elsif @calc == "Average" %>
 			<!-- Calculate average -->
-			<p id="average"></p>
+			<p id="average"></p><br />
+			<p id="min"></p><br />
+			<p id="max"></p><br />
+			<p id="most_frequent"></p><br />
 		<% end %>
-		<ul class="pageitem" style="padding: 8px 0 4px 8px;">
-        	<div id="chart" style=" height: 264px; width: 264px;">
-				<img src="/images/loading.gif" title="Loading..." />
-			</div>
-			
-		</ul>
-	
-		<%= link_to "Edit", "/experiments?data="+ params[:data_source] + "&type=" + @calc + "&ftype=" + params[:frequency_type] %> | <%= link_to "New Experiment", "/experiments" %>
-	
+		<p style = "text-align: center;">	
+			<%= link_to "Edit", "/experiments?data="+ params[:data_source] + "&type=" + @calc + "&ftype=" + params[:frequency_type] %> | <%= link_to "New Experiment", "/experiments" %>
+		</p>	
 	</div><!--close interior-->
 </div><!-- content -->
 
 <script>
 	$(document).ready(function(){
+					
+		<% if @calc == "Average" %>
+			var data = [
+					<% @data.each do |datapoint| %>
+						<% time = Time.at(datapoint.time.to_i).in_time_zone(current_user.time_zone) %>
+						<%= (time.hour*3600) + (time.min*60) + (time.sec) %>
+						<% if datapoint.time != @data.last.time %>,<% end %>					
+					<% end %>
+			];
+			average(data);
+			var data_sort = data.sort(sortfunc);
+			var min = data_sort[0];
+			var max = data_sort[data_sort.length - 1];
+			$("#min").html('Earliest: '+ time_of_day(min));
+			$("#max").html('Latest: '+ time_of_day(max));
+						
+			// Calculate "mode"
+			var begin_range = Math.floor(min/(30*60));
+			var end_range = Math.ceil(max/(30*60));
 		
+			var count = data;
+			for (var i = 0; i < data.length; i++){
+				count[i] = Math.floor(data[i]/(15*60));			
+			}
+			
+			$("#most_frequent").html('Most freq. range: ' + time_of_day(mode(count)*15*60) + " to " + time_of_day((mode(count) + 1)*15*60));
+			
+			//plot(data, "Average");
+		<% elsif @calc == "Frequency" %>
 			var data = [
 					<% @data.each do |datapoint| %>
 						<% time = Time.at(datapoint.time.to_i).in_time_zone(current_user.time_zone) %>
@@ -28,10 +58,7 @@
 						<% if datapoint.time != @data.last.time %>,<% end %>					
 					<% end %>
 				];
-		<% if @calc == "Average" %>
-			average(data);
-			plot(data);
-		<% elsif @calc == "Frequency" %>
+		
 			var freq_data = [[-1,0]];
 			
 			var freq = "<%= params[:frequency_type] %>";
@@ -100,31 +127,117 @@
 			//var avg = Math.round(sum / freq_data.length);
 			var avg = sum / freq_data.length;
 			$("#frequency").html(avg);
-			plot(freq_data);
+			plot(freq_data, "Frequency");
 		<% end %>	
 	});
 		
 
 	
-	function plot(data){
+	function plot(data, type){
 		$("#chart").html('');
-		
-			$.jqplot('chart', [data],
-				{
-					title: '<%= params[:data_source] %>',
-					axesDefaults: {
-						showTicks: true
-					}
+			
+			if ( type == "Average")	{
+				/*for( var i=0; i < data.length; i++){
+					//data[i][0] = parseInt(data[i][1]*1000);
+					data[i][1] = parseInt(data[i][1]*1000);				
 				}
-			);
+				$.jqplot('chart', [data],
+					{
+						axesDefaults: {
+						},
+						axes: {
+							xaxis: {
+								showTicks: false
+							},
+							yaxis: {
+								renderer: $.jqplot.DateAxisRenderer,
+								tickOptions:{formatString:'%#I:%M %p'}
+							}
+						}
+					}
+				);*/
+			}
+			else if ( type == "Frequency")	{
+				$.jqplot('chart', [data],
+					{
+						axesDefaults: {
+							pad: 2
+						},
+						seriesDefaults:{
+            				renderer:$.jqplot.BarRenderer,
+            				pointLabels: { show: true, location: 'n' },
+							rendererOptions: {
+             					barWidth: 10
+            				}
+        				},
+						axes: {
+							xaxis: {
+								//renderer: $.jqplot.DateAxisRenderer,
+								//tickOptions:{formatString:'%b'},
+								showTicks: true
+							},
+							yaxis: {
+								
+							}
+						}
+					}
+				);
+			}
+	};
+	
+	function mode(array){
+    	if(array.length == 0)
+    	    return null;
+    	var modeMap = {};
+    	var maxEl = array[0], maxCount = 1;
+    	for(var i = 0; i < array.length; i++)
+    	{
+    	    var el = array[i];
+    	    if(modeMap[el] == null)
+    	            modeMap[el] = 1;
+    	    else
+    	            modeMap[el]++;  
+    	    if(modeMap[el] > maxCount)
+    	    {
+    	            maxEl = el;
+    	            maxCount = modeMap[el];
+    	    }
+    	}
+    	return maxEl;
+	}
+	
+	function sortfunc(a,b){
+		return a - b;
+	};
+	
+	function time_of_day(avg){
+		var hour = Math.floor(avg/3600);
+		if (hour > 12){
+			hour = hour - 12;
+			var am_pm = "PM";
+		}
+		else{
+			var am_pm = "AM";
+		}
+		var minute = Math.floor((avg%3600)/60);
+		if (minute < 10){
+			minute = "0" + minute;
+		}
+		var second = Math.floor((avg%3600)%60);
+		if (second < 10){
+			second = "0" + second;
+		}
+		var time_of_day = hour + ":" + minute + ":" + second + " " + am_pm;
+		return time_of_day;
 	};
 	
 	function average(data){
 			var sum = 0;
 			for (var i= 0; i < data.length; i++){
-				sum = sum + data[i][1];		
+				sum += data[i];		
 			}
 			var avg = Math.round(sum / data.length);
+			
 			var hour = Math.floor(avg/3600);
 			if (hour > 12){
 				hour = hour - 12;
@@ -140,7 +253,8 @@
 			var second = Math.floor((avg%3600)%60);
 			if (second < 10){
 				second = "0" + second;
-			}
+			}			
+			
 			$("#average").html('Average: '+ hour +':'+minute+':'+second+' '+time_of_day);
 	};
 	
